@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WxUser">
+    <resultMap type="com.sh.znks.domain.user.WxUser" id="WxUser">
+        <id property="id" column="id"/>
+        <result property="unionId" column="union_id"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="gender" column="gender"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="purePhoneNumber" column="pure_phone_number"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="version" column="version"/>
+        <result property="platform" column="platform"/>
+        <result property="city" column="city"/>
+        <result property="province" column="province"/>
+        <result property="country" column="country"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
+
+    <sql id="wxFields">
+        union_id,nick_name,avatar_url,gender,latitude,longitude,phone_number,pure_phone_number,
+        country_code,brand,model,version,platform,city,province,country,created
+    </sql>
+
+    <insert id="insertWxUser" parameterType="WxUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO zn_wx_user(<include refid="wxFields"/>)
+        VALUES (#{unionId},#{nickName},#{avatarUrl},#{gender},#{latitude},#{longitude},#{phoneNumber},
+        #{purePhoneNumber},#{countryCode},#{brand},#{model},#{version},#{platform},#{city},#{province},#{country},now())
+    </insert>
+
+    <select id="getWxUserByUnionid" parameterType="java.lang.String" resultMap="WxUser">
+        SELECT id,<include refid="wxFields"/>,modified
+        FROM zn_wx_user
+        WHERE union_id = #{unionId}
+    </select>
+
+    <insert id="insertSignInfo" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO zn_sign(user_id,created) VALUES (#{userId},now())
+    </insert>
+
+    <select id="getSignInfo" parameterType="java.util.HashMap" resultType="java.util.Date">
+        SELECT created FROM zn_sign
+        <where>
+            <if test="questionId != null">
+                user_id = #{userId}
+            </if>
+            <if test="created != null">
+                AND created LIKE concat('%',#{created},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteSignInfoByUserId" parameterType="java.lang.String">
+        DELETE FROM zn_sign WHERE user_id = #{userId}
+    </delete>
+
+</mapper>
