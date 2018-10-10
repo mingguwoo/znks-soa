@@ -6,27 +6,28 @@ import java.util.Date;
  * Created by wuminggu on 2018/7/6.
  */
 public class QuestionCondition {
-    private String questionId;          //ÎÊÌâid
-    private Integer grade;              //ËùÊôÄê¼¶£¨K1-K12£©
-    private Integer subjectId;          //ËùÊô¿ÆÄ¿:0Êı¡¢1Óï¡¢2Íâ
-    private Integer questionType;       //ÌâĞÍ:1µ¥Ñ¡¡¢2¶àÑ¡¡¢3ÅĞ¶Ï¡¢4Ìî¿Õ¡¢5¼ÆËã¡¢6ÎÊ´ğ¡¢7½â´ğ¡¢8ÂÛÊö¡¢9ÍêĞÎÌî¿Õ¡¢10Ö¤Ã÷¡¢11ÔÄ¶ÁÀí½â¡¢12×÷ÎÄ¡¢13ÖÇÁ¦Ìâ¡¢×Ô¶¨Òå
-    private String questionDescribe;    //ÌâÄ¿ÃèÊö
-    private Integer difficultyLevel;    //ÄÑ¶ÈÏµÊı£¨1-5¿ÅĞÇ£©
-    private Integer questionValue;      //ÎÊÌâ¼ÛÖµ£¨0-5µÎÑª£©
-    private String expertId;            //³öÌâÕßid/×¨¼Òid
-    private String expertZn;            //³öÌâÕßÃû³Æ/×¨¼ÒÃû³Æ
-    private Integer status;             //ÌâÄ¿×´Ì¬:0Î´Í¨¹ı¡¢1Í¨¹ı¡¢2ÉóºËÖĞ
-    private Integer taskStatus;         //ÌâÄ¿×´Ì¬:0Î´Í¨¹ı¡¢1Í¨¹ı¡¢2ÉóºËÖĞ
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
-    private Integer start = 0;          //²éÑ¯¿ªÊ¼ÌõÊı£¨Ä¬ÈÏ:0¿ªÊ¼£©
-    private Integer size = 10;          //²éÑ¯ÏŞÖÆÌõÊı£¨Ä¬ÈÏ:10Ìõ£©
+    private Long questionId;            //é—®é¢˜id
+    private Integer grade;              //æ‰€å±å¹´çº§ï¼ˆK1-K12ï¼‰
+    private Integer subjectId;          //æ‰€å±ç§‘ç›®:0æ•°ã€1è¯­ã€2å¤–
+    private Integer questionType;       //é¢˜å‹:0å•é€‰ã€1åˆ¤æ–­
+    private String questionDescribe;    //é¢˜ç›®æè¿°
+    private Integer difficultyLevel;    //éš¾åº¦ç³»æ•°ï¼ˆ1-5é¢—æ˜Ÿï¼‰
+    private Integer questionValue;      //é—®é¢˜ä»·å€¼ï¼ˆ0-5æ»´è¡€ï¼‰
+    private String expertId;            //å‡ºé¢˜è€…id/ä¸“å®¶id
+    private String expertZn;            //å‡ºé¢˜è€…åç§°/ä¸“å®¶åç§°
+    private Integer status;             //é¢˜ç›®çŠ¶æ€:0æœªé€šè¿‡ã€1é€šè¿‡ã€2å®¡æ ¸ä¸­
+    private Integer taskStatus;         //é¢˜ç›®çŠ¶æ€:0æœªåšé¢˜ã€1å·²åšé¢˜
+    private Integer questionArea;       //å‡ºé¢˜é¢†åŸŸï¼ˆå°å­¦ã€åˆä¸­ã€é«˜ä¸­ã€å¤§å­¦ã€è‹±è¯­ç­‰çº§ã€é©¾è€ƒã€ç¤¾ä¼šçŸ¥è¯†ã€ç›Šæ™ºç±»ã€‚ã€‚ã€‚ï¼‰
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
+    private Integer start = 0;          //æŸ¥è¯¢å¼€å§‹æ¡æ•°ï¼ˆé»˜è®¤:0å¼€å§‹ï¼‰
+    private Integer size = 10;          //æŸ¥è¯¢é™åˆ¶æ¡æ•°ï¼ˆé»˜è®¤:10æ¡ï¼‰
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -108,6 +109,14 @@ public class QuestionCondition {
 
     public void setTaskStatus(Integer taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public Integer getQuestionArea() {
+        return questionArea;
+    }
+
+    public void setQuestionArea(Integer questionArea) {
+        this.questionArea = questionArea;
     }
 
     public Date getCreated() {

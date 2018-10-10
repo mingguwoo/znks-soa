@@ -6,20 +6,21 @@ import java.util.Date;
  * Created by wuminggu on 2018/5/9.
  */
 public class Answer {
-    private Long id;                    //Ö÷¼ü¡¢×ÔÔöid
-    private String answerId;            //»Ø´ğid
-    private String questionId;          //ÎÊÌâid
-    private String answerDetail;        //Ìá½»´ğ°¸
-    private String userId;              //ÓÃ»§id/´ğÌâÕßid
-    private String userZn;              //ÓÃ»§zn/´ğÌâÕßzn
-    private Integer result;             //½á¹û:0´íÎó¡¢1ÕıÈ·
-    private String expertId;            //ÅĞ¶ÏÕßid/×¨¼Òid
-    private String expertZn;            //³öÌâÕßÃû³Æ/×¨¼ÒÃû³Æ
-    private String basis;               //ÅĞ¶ÏÀíÓÉ
-    private Date judgeTime;             //ÅĞ¶ÏÊ±¼ä
-    private Integer status;             //´ğÌâ×´Ì¬£º0Î´ÉóºË¡¢1ÉóºËÖĞ¡¢2ÉóºËÍê³É¡¢3ÒÑ½áËã
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
+    private Long id;                    //ä¸»é”®ã€è‡ªå¢id
+    private Long answerId;              //å›ç­”id
+    private Long questionId;            //é—®é¢˜id
+    private String answerDetail;        //æäº¤ç­”æ¡ˆ
+    private String userId;              //ç”¨æˆ·id/ç­”é¢˜è€…id
+    private String userZn;              //ç”¨æˆ·zn/ç­”é¢˜è€…zn
+    private Integer result;             //ç»“æœ:0é”™è¯¯ã€1æ­£ç¡®
+    private String expertId;            //åˆ¤æ–­è€…id/ä¸“å®¶id
+    private String expertZn;            //å‡ºé¢˜è€…åç§°/ä¸“å®¶åç§°
+    private String basis;               //åˆ¤æ–­ç†ç”±
+    private Date judgeTime;             //åˆ¤æ–­æ—¶é—´
+    private Integer status;             //ç­”é¢˜çŠ¶æ€ï¼š0æœªå®¡æ ¸ã€1å®¡æ ¸ä¸­ã€2å®¡æ ¸å®Œæˆã€3å·²ç»“ç®—
+    private String connectId;           //è¿æ¥idï¼ˆå¦‚ï¼šå›¢idï¼‰
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
 
     public Answer() {
     }
@@ -32,19 +33,19 @@ public class Answer {
         this.id = id;
     }
 
-    public String getAnswerId() {
+    public Long getAnswerId() {
         return answerId;
     }
 
-    public void setAnswerId(String answerId) {
+    public void setAnswerId(Long answerId) {
         this.answerId = answerId;
     }
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -120,6 +121,14 @@ public class Answer {
         this.status = status;
     }
 
+    public String getConnectId() {
+        return connectId;
+    }
+
+    public void setConnectId(String connectId) {
+        this.connectId = connectId;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -151,6 +160,7 @@ public class Answer {
                 ", basis='" + basis + '\'' +
                 ", judgeTime=" + judgeTime +
                 ", status=" + status +
+                ", connectId='" + connectId + '\'' +
                 ", created=" + created +
                 ", modified=" + modified +
                 '}';

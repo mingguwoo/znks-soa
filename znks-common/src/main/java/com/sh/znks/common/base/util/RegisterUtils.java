@@ -1,6 +1,7 @@
 package com.sh.znks.common.base.util;
 
 import com.sh.znks.common.base.Constant;
+import com.sh.znks.domain.dto.QuestionParam;
 import com.sh.znks.domain.register.User;
 import com.sh.znks.domain.user.ExpertUser;
 import com.sh.znks.domain.user.GeneralUser;
@@ -15,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RegisterUtils {
     /**
-     * ±à¼­×¢²áµÄÈë²Î(Ñ§Éú)
+     * ç¼–è¾‘æ³¨å†Œçš„å…¥å‚(å­¦ç”Ÿ)
      */
     public static GeneralUser InputGeneralParamSet(HttpServletRequest request) {
 
         GeneralUser user = new GeneralUser();
-        //Ê×´Î×¢²áÄ¬ÈÏÖµ
-        int rankings = Constant.ZERO;           //0ÎŞÃûÊÏ
-        int status = Constant.TWO;              //2Éó²éÖĞ
+        //é¦–æ¬¡æ³¨å†Œé»˜è®¤å€¼
+        int rankings = Constant.ZERO;           //0æ— åæ°
+        int status = Constant.TWO;              //2å®¡æŸ¥ä¸­
         String zn = request.getParameter("zn");
         String nickName = request.getParameter("nickName");
         String sex = request.getParameter("sex");
@@ -105,15 +106,15 @@ public class RegisterUtils {
     }
 
     /**
-     * ±à¼­×¢²áµÄÈë²Î(×¨¼Ò)
+     * ç¼–è¾‘æ³¨å†Œçš„å…¥å‚(ä¸“å®¶)
      */
     public static ExpertUser InputExpertParamSet(HttpServletRequest request) {
 
         ExpertUser user = new ExpertUser();
-        //Ê×´Î×¢²áÄ¬ÈÏÖµ
-        int expertType = Constant.ZERO;         //0ÆÕÍ¨ÀÏÊ¦
-        int status = Constant.TWO;              //2Éó²éÖĞ
-        int level = Constant.ONE;               //1¶Î
+        //é¦–æ¬¡æ³¨å†Œé»˜è®¤å€¼
+        int expertType = Constant.ZERO;         //0æ™®é€šè€å¸ˆ
+        int status = Constant.TWO;              //2å®¡æŸ¥ä¸­
+        int level = Constant.ONE;               //1æ®µ
         String zn = request.getParameter("zn");
         String headImg = request.getParameter("headImg");
         String phoneNumber = request.getParameter("phoneNumber");
@@ -169,13 +170,13 @@ public class RegisterUtils {
     }
 
     /**
-     * Ñ§Éú×¢²áÈë²Î±à¼­
+     * å­¦ç”Ÿæ³¨å†Œå…¥å‚ç¼–è¾‘
      * @param user
      * @param count
      * @return
      */
     public static GeneralUser editParamGU(GeneralUser user, Long count) {
-        //²ÎÊıÉè¶¨
+        //å‚æ•°è®¾å®š
         String generalId = Constant.PJN + String.valueOf(Constant.BASE_NO + count).substring(Constant.ONE);
         String zn = user.getZn();
         String nickName = user.getNickName();
@@ -187,7 +188,7 @@ public class RegisterUtils {
         if (StringUtils.isBlank(headImg))
             headImg = "http://touxiang/moren/imag.jpg";
 
-        //×¢²áÄÚÈİ
+        //æ³¨å†Œå†…å®¹
         GeneralUser generalUser = new GeneralUser();
         generalUser.setUserId(generalId);
         generalUser.setZn(zn);
@@ -219,13 +220,13 @@ public class RegisterUtils {
     }
 
     /**
-     * ×¨¼Ò×¢²áÈë²Î±à¼­
+     * ä¸“å®¶æ³¨å†Œå…¥å‚ç¼–è¾‘
      * @param user
      * @param count
      * @return
      */
     public static ExpertUser editParamEX(ExpertUser user, Long count) {
-        //²ÎÊıÉè¶¨
+        //å‚æ•°è®¾å®š
         String expertId = Constant.PJN + String.valueOf(Constant.BASE_NO + count).substring(Constant.ONE);
         String zn = user.getZn();
         String expertNick = user.getExpertNick();
@@ -237,7 +238,7 @@ public class RegisterUtils {
         if (StringUtils.isBlank(headImg))
             headImg = "http://touxiang/moren/imag.jpg";
 
-        //×¢²áÄÚÈİ
+        //æ³¨å†Œå†…å®¹
         ExpertUser expertUser = new ExpertUser();
         expertUser.setExpertId(expertId);
         expertUser.setZn(zn);
@@ -264,7 +265,7 @@ public class RegisterUtils {
     }
 
     /**
-     * ±à¼­×¢²áµÄÈë²Î(Î¢ĞÅ)
+     * ç¼–è¾‘æ³¨å†Œçš„å…¥å‚(å¾®ä¿¡)
      */
     public static WxUser InputWxParamSet(HttpServletRequest request) {
 
@@ -304,5 +305,63 @@ public class RegisterUtils {
         user.setCountry(country);
 
         return user;
+    }
+
+    /**
+     * ç¼–è¾‘å‘å¸ƒé¢˜ç›®çš„å…¥å‚
+     */
+    public static QuestionParam getDeployParam(HttpServletRequest request) {
+        QuestionParam qp = new QuestionParam();
+        String grade = request.getParameter("grade");
+        String subjectId = request.getParameter("subjectId");
+        String questionType = request.getParameter("questionType");
+        String questionDescribe = request.getParameter("questionDescribe");
+        String option1 = request.getParameter("option1");
+        String option2 = request.getParameter("option2");
+        String option3 = request.getParameter("option3");
+        String option4 = request.getParameter("option4");
+        String option5 = request.getParameter("option5");
+        String option6 = request.getParameter("option6");
+        String option7 = request.getParameter("option7");
+        String option8 = request.getParameter("option8");
+        String option9 = request.getParameter("option9");
+        String option10 = request.getParameter("option10");
+        String tips = request.getParameter("tips");
+        String standardAnswer = request.getParameter("standardAnswer");
+        String difficultyLevel = request.getParameter("difficultyLevel");
+        String questionValue = request.getParameter("questionValue");
+        String questionArea = request.getParameter("questionArea");
+        String expertId = request.getParameter("expertId");
+        String knowledge = request.getParameter("knowledge");
+
+        if (StringUtils.isNotBlank(grade))
+            qp.setGrade(Integer.valueOf(grade));
+        if (StringUtils.isNotBlank(subjectId))
+            qp.setSubjectId(Integer.valueOf(subjectId));
+        if (StringUtils.isNotBlank(questionType))
+            qp.setQuestionType(Integer.valueOf(questionType));
+        if (StringUtils.isNotBlank(difficultyLevel))
+            qp.setDifficultyLevel(Integer.valueOf(difficultyLevel));
+        if (StringUtils.isNotBlank(questionValue))
+            qp.setQuestionValue(Integer.valueOf(questionValue));
+        if (StringUtils.isNotBlank(questionArea))
+            qp.setQuestionArea(Integer.valueOf(questionArea));
+        qp.setQuestionDescribe(questionDescribe);
+        qp.setOption1(option1);
+        qp.setOption2(option2);
+        qp.setOption3(option3);
+        qp.setOption4(option4);
+        qp.setOption5(option5);
+        qp.setOption6(option6);
+        qp.setOption7(option7);
+        qp.setOption8(option8);
+        qp.setOption9(option9);
+        qp.setOption10(option10);
+        qp.setTips(tips);
+        qp.setStandardAnswer(standardAnswer);
+        qp.setExpertId(expertId);
+        qp.setKnowledge(knowledge);
+
+        return qp;
     }
 }

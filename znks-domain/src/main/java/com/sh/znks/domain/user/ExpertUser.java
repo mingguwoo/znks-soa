@@ -6,10 +6,10 @@ import com.sh.znks.domain.register.User;
  * Created by wuminggu on 2018/5/8.
  */
 public class ExpertUser extends User {
-    private String expertId;            //×¨¼Òid
-    private String expertNick;          //ÓÃ»§êÇ³Æ
-    private Integer expertType;         //×¨¼ÒÀàĞÍ£º0ÆÕÍ¨ÀÏÊ¦¡¢1ÃûÊ¦¡¢2×¨¼Ò¡¢3È¨Íş×¨¼Ò
-    private Integer level;              //È¨ÍşµÈ¼¶£º1¶Î¡¢2¶Î¡¢3¶Î¡¢4¶Î¡¢5¶Î
+    private String expertId;            //ä¸“å®¶id
+    private String expertNick;          //ç”¨æˆ·æ˜µç§°
+    private Integer expertType;         //ä¸“å®¶ç±»å‹ï¼š0æ™®é€šè€å¸ˆã€1åå¸ˆã€2ä¸“å®¶ã€3æƒå¨ä¸“å®¶
+    private Integer level;              //æƒå¨ç­‰çº§ï¼š1æ®µã€2æ®µã€3æ®µã€4æ®µã€5æ®µ
 
     public String getExpertId() {
         return expertId;

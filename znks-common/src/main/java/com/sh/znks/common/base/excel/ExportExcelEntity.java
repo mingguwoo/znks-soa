@@ -5,31 +5,31 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * µ¼³öexcelËùĞè²ÎÊı
+ * å¯¼å‡ºexcelæ‰€éœ€å‚æ•°
  */
 public class ExportExcelEntity {
     /**
-     * http response£¬ÓÃÓÚÊä³ö
+     * http responseï¼Œç”¨äºè¾“å‡º
      */
     private HttpServletResponse response;
     /**
-     * Òªµ¼³öµÄ¶ÔÏóºÍ²ÎÊı£¬ÓÃ¼üÖµ¶Ô´æ´¢£¬keyÖµÓëftlÎÄ¼şÖĞ¶ÔÓ¦
+     * è¦å¯¼å‡ºçš„å¯¹è±¡å’Œå‚æ•°ï¼Œç”¨é”®å€¼å¯¹å­˜å‚¨ï¼Œkeyå€¼ä¸ftlæ–‡ä»¶ä¸­å¯¹åº”
      */
     private Map<String, Object> exportMap;
     /**
-     * Ä£°åÃû³Æ£¨ftlÎÄ¼ş£©
+     * æ¨¡æ¿åç§°ï¼ˆftlæ–‡ä»¶ï¼‰
      */
     private String templateName;
     /**
-     * µ¼³öÎÄ¼ş´æ·ÅÂ·¾¶
+     * å¯¼å‡ºæ–‡ä»¶å­˜æ”¾è·¯å¾„
      */
     private String exportPath;
     /**
-     * µ¼³öÎÄ¼şÃû
+     * å¯¼å‡ºæ–‡ä»¶å
      */
     private String exportFileName;
     /**
-     * Ä¬ÈÏ±àÂë£¬UTF-8 OR GBK
+     * é»˜è®¤ç¼–ç ï¼ŒUTF-8
      */
     private String defaultEncoding;
 

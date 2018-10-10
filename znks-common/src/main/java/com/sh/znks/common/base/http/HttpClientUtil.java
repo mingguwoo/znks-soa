@@ -35,7 +35,7 @@ public class HttpClientUtil {
 
             HttpGet httpGet = new HttpGet(url);
 
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// ÉèÖÃÇëÇóºÍ´«Êä³¬Ê±Ê±¼ä
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// è®¾ç½®è¯·æ±‚å’Œä¼ è¾“è¶…æ—¶æ—¶é—´
             httpGet.setConfig(requestConfig);
 
             HttpResponse response = client.execute(httpGet);
@@ -66,7 +66,7 @@ public class HttpClientUtil {
 
             HttpPost httpPost = new HttpPost(url);
 
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// ÉèÖÃÇëÇóºÍ´«Êä³¬Ê±Ê±¼ä
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// è®¾ç½®è¯·æ±‚å’Œä¼ è¾“è¶…æ—¶æ—¶é—´
             httpPost.setConfig(requestConfig);
 
             if (null != params && !params.isEmpty()) {
@@ -103,11 +103,11 @@ public class HttpClientUtil {
 
             HttpPost httpPost = new HttpPost(url);
 
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// ÉèÖÃÇëÇóºÍ´«Êä³¬Ê±Ê±¼ä
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// è®¾ç½®è¯·æ±‚å’Œä¼ è¾“è¶…æ—¶æ—¶é—´
             httpPost.setConfig(requestConfig);
-            //ÉèÖÃheader
+            //è®¾ç½®header
             httpPost.setHeader("Content-type", "application/json");
-            //×éÖ¯ÇëÇó²ÎÊı
+            //ç»„ç»‡è¯·æ±‚å‚æ•°
             StringEntity stringEntity = new StringEntity(stringJson, ENCODE);
             httpPost.setEntity(stringEntity);
 
@@ -154,7 +154,7 @@ public class HttpClientUtil {
 //    }
 
     /**
-     * warning: url±ØĞëÊÇhttp:// ÕâÑù´øÓĞĞ­ÒéÍ·µÄ   ²»È»new URL(url)  Õâ±ß»á³ö´í
+     * warning: urlå¿…é¡»æ˜¯http:// è¿™æ ·å¸¦æœ‰åè®®å¤´çš„   ä¸ç„¶new URL(url)  è¿™è¾¹ä¼šå‡ºé”™
      * @param url
      * @param params
      * @param cookies
@@ -184,7 +184,7 @@ public class HttpClientUtil {
                 }
             }
 
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// ÉèÖÃÇëÇóºÍ´«Êä³¬Ê±Ê±¼ä
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeOut).setConnectTimeout(timeOut).build();// è®¾ç½®è¯·æ±‚å’Œä¼ è¾“è¶…æ—¶æ—¶é—´
             httpPost.setConfig(requestConfig);
 
             if (null != params && !params.isEmpty()) {

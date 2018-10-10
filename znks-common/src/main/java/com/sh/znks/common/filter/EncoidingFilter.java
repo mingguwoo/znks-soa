@@ -22,22 +22,22 @@ public class EncoidingFilter implements Filter {
 
     }
 
-
-    //¹ıÂË·½·¨  ÊÇ·ñÍùÏÂÖ´ĞĞ
+    //è¿‡æ»¤æ–¹æ³•  æ˜¯å¦å¾€ä¸‹æ‰§è¡Œ
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest request=(HttpServletRequest)arg0;
         HttpServletResponse response=(HttpServletResponse)arg1;
 
-        request.setCharacterEncoding(encoding);
+        request.setCharacterEncoding(encoding);//åªå¯¹postæœ‰æ•ˆ
         response.setCharacterEncoding(encoding);
-
-        //¹ıÂËÍ¨ĞĞÖ¤
+        response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("content-type","text/html;charset=UTF-8");
+        //è¿‡æ»¤é€šè¡Œè¯
         chain.doFilter(request, response);
     }
 
-    //¸ù¾İweb.xmlÎÄ¼şµÄÅäÖÃ½øĞĞ³õÊ¼»¯
+    //æ ¹æ®web.xmlæ–‡ä»¶çš„é…ç½®è¿›è¡Œåˆå§‹åŒ–
     @Override
     public void init(FilterConfig arg0) throws ServletException {
         this.encoding = arg0.getInitParameter("encoding");

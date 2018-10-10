@@ -6,14 +6,14 @@ import com.sh.znks.domain.register.User;
  * Created by wuminggu on 2018/5/8.
  */
 public class GeneralUser extends User {
-    private String userId;              //ÓÃ»§id
-    private String nickName;            //ÓÃ»§êÇ³Æ
-    private Integer sex;                //ĞÔ±ğ£º0Å®¡¢1ÄĞ
-    private Integer age;                //ÄêÁä
-    private Integer userType;           //ÓÃ»§ÀàĞÍ:0Éç»áÈË¡¢1Ñ§Éú¡¢2ÀÏÊ¦¡¢3ÆäËû
-    private Integer grade;              //Äê¼¶£¨K1-K12£©
-    private String company;             //ÓÃ»§ËùÊôµ¥Î»
-    private Integer rankings;           //ÅÅÎ»:8ÓîÖæ×îÇ¿¡¢7Õ½Ê¥¡¢6Õ½Éñ¡¢5Ó¢ĞÛ¡¢4´øÍ·´ó¸ç¡¢3¶şµ±¼Ò¡¢2ÈıµÜ¡¢1Ğ¡µÜ¡¢0ÎŞÃûÊÏ
+    private String userId;              //ç”¨æˆ·id
+    private String nickName;            //ç”¨æˆ·æ˜µç§°
+    private Integer sex;                //æ€§åˆ«ï¼š0å¥³ã€1ç”·
+    private Integer age;                //å¹´é¾„
+    private Integer userType;           //ç”¨æˆ·ç±»å‹:0ç¤¾ä¼šäººã€1å­¦ç”Ÿã€2è€å¸ˆã€3å…¶ä»–
+    private Integer grade;              //å¹´çº§ï¼ˆK1-K12ï¼‰
+    private String company;             //ç”¨æˆ·æ‰€å±å•ä½
+    private Integer rankings;           //æ’ä½:8å®‡å®™æœ€å¼ºã€7æˆ˜åœ£ã€6æˆ˜ç¥ã€5è‹±é›„ã€4å¸¦å¤´å¤§å“¥ã€3äºŒå½“å®¶ã€2ä¸‰å¼Ÿã€1å°å¼Ÿã€0æ— åæ°
 
     public String getUserId() {
         return userId;

@@ -38,26 +38,3 @@ public class DemoController {
         return js.toString();
     }
 }
-
-//    @RequestMapping(value = "/first/getUserInfo", method = RequestMethod.GET)
-//    public ResultResponse getUserInfo() {
-////        List<Author> result = authorService.searchAuthorList();
-//        ExpertUser expertUser = new ExpertUser();
-////        int res = userService.insertExpertUser(expertUser);
-////        log.error("L35_getUserInfo result is {}", JSON.toJSONString(res));
-////        ResultResponse rr = new ResultResponse(ResultCodeEnum.ZN_OK, res);
-//        return rr;
-//    }
-
-    //导入Excel文件
-    //public ResultResponse batchExcelCreate(@RequestParam(required = true) MultipartFile excel, @RequestParam(required = true) String activityKey) {
-    /*POIUtils poi = new POIUtils();
-    List<Long> result;
-        try {
-        //外层List是每一行的数据，内层List每一个行的单元格
-        List<List<String>> data = poi.getExcelData(excel, excel.getOriginalFilename(), 0);
-        if (CollectionUtils.isEmpty(data))
-            return ResultResponse.failed(ApiCodeEnum.PARAMETER_ERROR);
-
-
-    }*/

@@ -8,12 +8,12 @@ import com.sh.znks.domain.user.WxUser;
  * Created by wuminggu on 2018/6/4.
  */
 public class AuthorHolder {
-    //È«¾ÖÊ¹ÓÃµÄÓÃ»§ĞÅÏ¢ÉèÖÃ
+    //å…¨å±€ä½¿ç”¨çš„ç”¨æˆ·ä¿¡æ¯è®¾ç½®
     public static ThreadLocal<GeneralUser> GENERAHOLDER = new ThreadLocal<GeneralUser>();
     public static ThreadLocal<ExpertUser> EXPERTHOLDER = new ThreadLocal<ExpertUser>();
     public static ThreadLocal<WxUser> WXHOLDER = new ThreadLocal<WxUser>();
 
-    //Ñ§Éú
+    //å­¦ç”Ÿ
     public static GeneralUser getGeneralAuthor() {
         return GENERAHOLDER.get();
     }
@@ -21,7 +21,7 @@ public class AuthorHolder {
         GENERAHOLDER.set(user);
     }
 
-    //×¨¼Ò
+    //ä¸“å®¶
     public static ExpertUser getExpertAuthor() {
         return EXPERTHOLDER.get();
     }
@@ -29,7 +29,7 @@ public class AuthorHolder {
         EXPERTHOLDER.set(user);
     }
 
-    //Î¢ĞÅÊÚÈ¨ÓÃ»§
+    //å¾®ä¿¡æˆæƒç”¨æˆ·
     public static WxUser getWxAuthor() {
         return WXHOLDER.get();
     }

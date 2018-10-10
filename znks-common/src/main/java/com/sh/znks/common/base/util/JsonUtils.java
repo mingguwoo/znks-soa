@@ -19,22 +19,22 @@ import java.util.Map;
  */
 public class JsonUtils {
     private final static Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
-    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper(); // ĞÂ°æ¡¢simleFactory¡¢¶ş½øÖÆ£¬¸ßĞÔÄÜ
+    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper(); // æ–°ç‰ˆã€simleFactoryã€äºŒè¿›åˆ¶ï¼Œé«˜æ€§èƒ½
 
     private JsonUtils() {
     }
 
     static {
-        // ÉèÖÃÊä³ö°üº¬µÄÊôĞÔ
+        // è®¾ç½®è¾“å‡ºåŒ…å«çš„å±æ€§
         OBJECT_MAPPER.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        // ÉèÖÃÊäÈëÊ±ºöÂÔJSON×Ö·û´®ÖĞ´æÔÚ¶øJava¶ÔÏóÊµ¼ÊÃ»ÓĞµÄÊôĞÔ
+        // è®¾ç½®è¾“å…¥æ—¶å¿½ç•¥JSONå­—ç¬¦ä¸²ä¸­å­˜åœ¨è€ŒJavaå¯¹è±¡å®é™…æ²¡æœ‰çš„å±æ€§
         OBJECT_MAPPER.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         OBJECT_MAPPER.setDateFormat(df);
     }
 
     /**
-     * Èç¹ûJSON×Ö·û´®ÎªNull»ò"null"×Ö·û´®,·µ»ØNull. Èç¹ûJSON×Ö·û´®Îª"[]",·µ»Ø¿Õ¼¯ºÏ.
+     * å¦‚æœJSONå­—ç¬¦ä¸²ä¸ºNullæˆ–"null"å­—ç¬¦ä¸²,è¿”å›Null. å¦‚æœJSONå­—ç¬¦ä¸²ä¸º"[]",è¿”å›ç©ºé›†åˆ.
      *
      * @param jsonString
      * @param clazz
@@ -52,7 +52,7 @@ public class JsonUtils {
     }
 
     /**
-     * ¶ÁÈ¡¼¯ºÏÈçList/Map,ÇÒ²»ÊÇList<String>Ê±.
+     * è¯»å–é›†åˆå¦‚List/Map,ä¸”ä¸æ˜¯List<String>æ—¶.
      *
      * @param jsonString
      * @param typeReference
@@ -72,12 +72,12 @@ public class JsonUtils {
     }
 
     /**
-     * ½«¶ÔÏó×ª»»³Éjson×Ö·û´®,Èç¹û×ª»»Ê§°ÜÔò·µ»Ønull
+     * å°†å¯¹è±¡è½¬æ¢æˆjsonå­—ç¬¦ä¸²,å¦‚æœè½¬æ¢å¤±è´¥åˆ™è¿”å›null
      *
      * @author zhaoyunxiao
      * @param o
-     *            ĞèÒª×ª»»ÎªjsonµÄ¶ÔÏó
-     * @return String ×ª»»ºóµÄjson×Ö·û´®
+     *            éœ€è¦è½¬æ¢ä¸ºjsonçš„å¯¹è±¡
+     * @return String è½¬æ¢åçš„jsonå­—ç¬¦ä¸²
      *
      *
      * */
@@ -92,7 +92,7 @@ public class JsonUtils {
     }
 
     /**
-     * Èç¹û¶ÔÏóÎªNull,·µ»Ø"null". Èç¹û¼¯ºÏÎª¿Õ¼¯ºÏ,·µ»Ø"[]".
+     * å¦‚æœå¯¹è±¡ä¸ºNull,è¿”å›"null". å¦‚æœé›†åˆä¸ºç©ºé›†åˆ,è¿”å›"[]".
      */
     public static String toJson(Object object) {
         try {
@@ -104,7 +104,7 @@ public class JsonUtils {
     }
 
     /**
-     * ¶ÔÏó×ªByteÊı×é
+     * å¯¹è±¡è½¬Byteæ•°ç»„
      *
      * @param obj
      * @return
@@ -151,13 +151,13 @@ public class JsonUtils {
             }
             return OBJECT_MAPPER.readValue(json, Map.class);
         } catch (Exception e) {
-            LOG.error("json2Map(), ³ö´íµÄjsonÄÚÈİ: {} exception {}", json, e.getMessage());
+            LOG.error("json2Map(), å‡ºé”™çš„jsonå†…å®¹: {} exception {}", json, e.getMessage());
         }
         return new HashMap<String, Object>();
     }
 
     /**
-     * È¡³öMapper×ö½øÒ»²½µÄÉèÖÃ»òÊ¹ÓÃÆäËûĞòÁĞ»¯API.
+     * å–å‡ºMapperåšè¿›ä¸€æ­¥çš„è®¾ç½®æˆ–ä½¿ç”¨å…¶ä»–åºåˆ—åŒ–API.
      */
     public static ObjectMapper getMapper() {
         return OBJECT_MAPPER;

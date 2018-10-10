@@ -1,28 +1,49 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd"
     default-autowire="byName">
 
-    <!-- 定义目标bean和bean中的方法 -->
-    <bean id="znksTestJob" class="com.sh.znks.service.job.ZnksTestJob"/>
-    <bean id="znksTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="znksTestJob"/>
+    <!-- 瀹氫箟鐩爣bean鍜宐ean涓殑鏂规硶 -->
+    <bean id="znksStatusJob" class="com.sh.znks.service.impl.job.StatusJobServiceImpl"/>
+    <bean id="znksStatusDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="znksStatusJob"/>
         <property name="targetMethod" value="execute"/>
         <property name="concurrent" value="false"/>
     </bean>
-    <!-- ====================== 调度触发器 ======================== -->
-    <bean id="znksTestTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="znksTestDetail"/>
-        <property name="cronExpression" value="0 0 */1 * * ?"/>
+    <bean id="znksAccountingJob" class="com.sh.znks.service.impl.job.AccountingJobServiceImpl"/>
+    <bean id="znksAccountingDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="znksAccountingJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
     </bean>
-
-    <!-- ======================== 调度工厂 ======================== -->
+    <bean id="znksExpiryJob" class="com.sh.znks.service.impl.job.ExpiryJobServiceImpl"/>
+    <bean id="znksExpiryDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="znksExpiryJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!-- ====================== 璋冨害瑙﹀彂鍣� ======================== -->
+    <bean id="znksStatusTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="znksStatusDetail"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean>
+    <bean id="znksAccountingTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="znksAccountingDetail"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean>
+    <bean id="znksExpiryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="znksExpiryDetail"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
+    </bean>
+    <!-- ======================== 璋冨害宸ュ巶 ======================== -->
     <bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
         <property name="triggers">
             <list>
-                <ref bean="znksTestTrigger"/>
+                <!--<ref bean="znksStatusTrigger"/>-->
+                <!--<ref bean="znksAccountingTrigger"/>-->
+                <ref bean="znksExpiryTrigger"/>
             </list>
         </property>
         <property name="autoStartup" value="true" />

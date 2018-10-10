@@ -18,7 +18,10 @@ public enum  ResultCodeEnum {
     ZN_QUESTION_EXIST(10, "This question has exist"),
     ZN_NO_LOGIN(11, "no login"),
     ZN_UNIONID_IS_NULL(12, "UnionId is null"),
-    ZN_TOKEN_ERR(13, "token is error");
+    ZN_TOKEN_ERR(13, "token is error"),
+    ZN_BATTLE_IS_EXIST(14, "this battleGroup has exist"),
+    ZN_OUT_OF_BOUND(15, "the amount is out of bound"),
+    ZN_USER_JOINED(16, "the user has joined");
 
     private int code;
     private String msg;

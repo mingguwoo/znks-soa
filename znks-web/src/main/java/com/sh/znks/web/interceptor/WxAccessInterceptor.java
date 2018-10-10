@@ -6,11 +6,16 @@ import com.sh.znks.common.base.util.JsonUtils;
 import com.sh.znks.common.base.util.ParamEditUtils;
 import com.sh.znks.common.base.util.UrlUtils;
 import com.sh.znks.common.result.ResultCodeEnum;
+import com.sh.znks.common.result.ResultResponse;
+import com.sh.znks.domain.user.WxUser;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,19 +28,26 @@ public class WxAccessInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //Ô¤´¦Àí
-        boolean res = false;
-//        boolean res = true;
+        //é¢„å¤„ç†
+//        boolean res = false;
+        boolean res = true;
         String url = request.getRequestURL().toString();
         log.error("url is {}", url);
         String path = request.getServletPath();
         if (StringUtils.isNotBlank(path) && path.startsWith("/")) {
-            //¹ıÂËµôä¯ÀÀÆ÷×Ô¶¯·¢ËÍµÄfavicon.icoÇëÇó
+            //è¿‡æ»¤æ‰æµè§ˆå™¨è‡ªåŠ¨å‘é€çš„favicon.icoè¯·æ±‚
             if (UrlUtils.FAVICON.equals(path)) {
                 res = true;
             }
 
-            //Ğ£ÑéµÇÂ¼Ì¬ÊÇ·ñÕıÈ·
+            //å‚æ•°æ ¡éªŒ
+            WxUser user = AuthorHolder.getWxAuthor();
+            if (user == null) {
+                this.responseInfoSet(ResultCodeEnum.ZN_NO_LOGIN, response);
+                return res;
+            }
+
+            //æ ¡éªŒç™»å½•æ€æ˜¯å¦æ­£ç¡®
             String token = request.getParameter("token");
             if (ParamEditUtils.checkTokenAvailability(token)) {
                 log.error("L35 token is {}, wxUser is{}", token, JsonUtils.toJson(AuthorHolder.getWxAuthor()));
@@ -44,16 +56,20 @@ public class WxAccessInterceptor extends HandlerInterceptorAdapter {
         }
 
         if (!res) {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json; charset=utf-8");
-            JSONObject result = new JSONObject();
-            result.put("code", ResultCodeEnum.ZN_TOKEN_ERR.getCode());
-            result.put("msg", ResultCodeEnum.ZN_TOKEN_ERR.getMsg());
-            PrintWriter out = response.getWriter();
-            out.append(result.toString());
+            this.responseInfoSet(ResultCodeEnum.ZN_TOKEN_ERR, response);
         }
 
         return res;
+    }
+
+    private void responseInfoSet(ResultCodeEnum en, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        JSONObject result = new JSONObject();
+        result.put("code", en.getCode());
+        result.put("msg", en.getMsg());
+        PrintWriter out = response.getWriter();
+        out.append(result.toString());
     }
 
     @Override

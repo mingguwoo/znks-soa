@@ -6,14 +6,12 @@ import java.util.Date;
  * Created by wuminggu on 2018/5/9.
  */
 public class Memorandum {
-    private Long id;                    //Ö÷¼ü¡¢×ÔÔöid
-    private String questionId;          //ÎÊÌâid
-    private String answerId;            //»Ø´ğid
-    private String userId;              //ÓÃ»§id/´ğÌâÕßid
-    private Integer type;               //ÊÕ²ØÀàĞÍ:0´íÌâ¡¢1¾­µäÌâ
-    private Integer status;             //×´Ì¬:0ÒÑÊÕ²Ø¡¢1È¡ÏûÊÕ²Ø
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
+    private Long id;                    //ä¸»é”®ã€è‡ªå¢id
+    private Long questionId;          //é—®é¢˜id
+    private String userId;              //ç”¨æˆ·id/ç­”é¢˜è€…id
+    private Integer status;             //çŠ¶æ€:0å·²æ”¶è—ã€1å–æ¶ˆæ”¶è—
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
 
     public Memorandum() {
     }
@@ -26,20 +24,12 @@ public class Memorandum {
         this.id = id;
     }
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
-    }
-
-    public String getAnswerId() {
-        return answerId;
-    }
-
-    public void setAnswerId(String answerId) {
-        this.answerId = answerId;
     }
 
     public String getUserId() {
@@ -48,14 +38,6 @@ public class Memorandum {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Integer getStatus() {
@@ -87,9 +69,7 @@ public class Memorandum {
         return "Memorandum{" +
                 "id=" + id +
                 ", questionId='" + questionId + '\'' +
-                ", answerId='" + answerId + '\'' +
                 ", userId='" + userId + '\'' +
-                ", type=" + type +
                 ", status=" + status +
                 ", created=" + created +
                 ", modified=" + modified +

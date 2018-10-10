@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -15,14 +15,14 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!-- ¸Ã BeanPostProcessor ½«×Ô¶¯¶Ô±ê×¢ @Autowired µÄ Bean ½øÐÐ×¢Èë -->
+    <!-- è¯¥ BeanPostProcessor å°†è‡ªåŠ¨å¯¹æ ‡æ³¨ @Autowired çš„ Bean è¿›è¡Œæ³¨å…¥ -->
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 
-    <!-- <mvc:annotation-driven /> »á×Ô¶¯×¢²áDefaultAnnotationHandlerMappingÓëAnnotationMethodHandlerAdapter Á½¸öbean,
-        ÊÇspring MVCÎª@Controllers·Ö·¢ÇëÇóËù±ØÐëµÄ¡£²¢Ìá¹©ÁË£ºÊý¾Ý°ó¶¨Ö§³Ö£¬@NumberFormatannotationÖ§³Ö£¬@DateTimeFormatÖ§³Ö£¬
-        @ValidÖ§³Ö£¬¶ÁÐ´XMLµÄÖ§³Ö£¨JAXB£©£¬¶ÁÐ´JSONµÄÖ§³Ö£¨Jackson£©¡£ -->
+    <!-- <mvc:annotation-driven /> ä¼šè‡ªåŠ¨æ³¨å†ŒDefaultAnnotationHandlerMappingä¸ŽAnnotationMethodHandlerAdapter ä¸¤ä¸ªbean,
+        æ˜¯spring MVCä¸º@Controllersåˆ†å‘è¯·æ±‚æ‰€å¿…é¡»çš„ã€‚å¹¶æä¾›äº†ï¼šæ•°æ®ç»‘å®šæ”¯æŒï¼Œ@NumberFormatannotationæ”¯æŒï¼Œ@DateTimeFormatæ”¯æŒï¼Œ
+        @Validæ”¯æŒï¼Œè¯»å†™XMLçš„æ”¯æŒï¼ˆJAXBï¼‰ï¼Œè¯»å†™JSONçš„æ”¯æŒï¼ˆJacksonï¼‰ã€‚ -->
     <mvc:annotation-driven>
-        <!-- ´¦ÀíresponseBody ÀïÃæÈÕÆÚÀàÐÍ -->
+        <!-- å¤„ç†responseBody é‡Œé¢æ—¥æœŸç±»åž‹ -->
         <!--<mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
             <bean
@@ -40,20 +40,20 @@
         </mvc:message-converters>-->
     </mvc:annotation-driven>
 
-    <!-- <mvc:default-servlet-handler/> Ê¹ÓÃÄ¬ÈÏµÄServletÀ´ÏìÓ¦¾²Ì¬ÎÄ¼þ¡£²»¿ÉÒÔÕÒ²»µ½¾²Ì¬ÎÄ¼þ±¨404¡£-->
+    <!-- <mvc:default-servlet-handler/> ä½¿ç”¨é»˜è®¤çš„Servletæ¥å“åº”é™æ€æ–‡ä»¶ã€‚ä¸å¯ä»¥æ‰¾ä¸åˆ°é™æ€æ–‡ä»¶æŠ¥404ã€‚-->
     <mvc:default-servlet-handler/>
 
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/login/general/wxAuthorizationGenLogin"/>
+            <mvc:exclude-mapping path="/base/login/wxAuthorizationGenLogin"/>
             <ref bean="wxAccessInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
     <bean id="wxAccessInterceptor" class="com.sh.znks.web.interceptor.WxAccessInterceptor"/>
 
-    <!-- ÐèÒªÎÄ¼þÉÏ´«¹¦ÄÜÊ±£¬ÆôÓÃÒÔÏÂÅäÖÃ -->
+    <!-- éœ€è¦æ–‡ä»¶ä¸Šä¼ åŠŸèƒ½æ—¶ï¼Œå¯ç”¨ä»¥ä¸‹é…ç½® -->
     <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxInMemorySize">
             <value>1638400</value>

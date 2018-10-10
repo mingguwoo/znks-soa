@@ -2,13 +2,16 @@ package com.sh.znks.service.impl.business;
 
 import com.sh.znks.common.base.AuthorHolder;
 import com.sh.znks.common.base.Constant;
+import com.sh.znks.common.base.util.JsonUtils;
 import com.sh.znks.common.base.util.ParamEditUtils;
 import com.sh.znks.common.base.util.RedisUtils;
 import com.sh.znks.common.result.ResultCodeEnum;
 import com.sh.znks.common.result.ResultResponse;
 import com.sh.znks.dao.AnswerDao;
+import com.sh.znks.dao.BattleDao;
 import com.sh.znks.dao.QuestionDao;
 import com.sh.znks.domain.aq.Answer;
+import com.sh.znks.domain.aq.BattleRecord;
 import com.sh.znks.domain.aq.Question;
 import com.sh.znks.domain.dto.AnswerCondition;
 import com.sh.znks.domain.dto.AnswerParam;
@@ -25,7 +28,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +45,10 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionDao questionDao;
     @Autowired
     private AnswerDao answerDao;
+//    @Autowired
+//    private RedisUtils redisUtils;
     @Autowired
-    private RedisUtils redisUtils;
+    private BattleDao battleDao;
 
     private List<Question> questionList = new ArrayList<Question>();
 
@@ -56,7 +63,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public ResultResponse deployQuestion(QuestionParam param) {
         try {
-            //²éÑ¯ÊÇ·ñÒÑ´æÔÚÍ¬Ò»ÌâÄ¿
+            //æŸ¥è¯¢æ˜¯å¦å·²å­˜åœ¨åŒä¸€é¢˜ç›®
             QuestionCondition condition = new QuestionCondition();
             condition.setQuestionDescribe(param.getQuestionDescribe());
             condition.setSize(1);
@@ -64,8 +71,8 @@ public class QuestionServiceImpl implements QuestionService {
             if (CollectionUtils.isNotEmpty(resQ) || resQ.size() > 0)
                 return new ResultResponse(ResultCodeEnum.ZN_QUESTION_EXIST);
 
-            //±à¼­²ÎÊı
-            String questionId = questionDao.getQuestionIdMax();
+            //ç¼–è¾‘å‚æ•°
+            Long questionId = questionDao.getQuestionIdMax();
             Question question = ParamEditUtils.editDeployQuestion(param,questionId);
 
             int res = questionDao.insertQuestion(question);
@@ -85,42 +92,39 @@ public class QuestionServiceImpl implements QuestionService {
 //            List<Question> resRedis = (List<Question>) redisUtils.get(RedisKeyConstant.KEY_QUESTIONS_LIST);
 //            log.error("L65_getQuestionList resRedis is{}", JsonUtils.toJson(resRedis));
 //            if (CollectionUtils.isEmpty(resRedis)) {
-            //²éÑ¯Ìõ¼ş±à¼­
+            //æŸ¥è¯¢æ¡ä»¶ç¼–è¾‘
             QuestionCondition qc = ParamEditUtils.editGetQuestionList(condition);
             List<Question> resQueList = questionDao.getQuestionInfos(qc);
             if (CollectionUtils.isEmpty(resQueList))
                 return new ResultResponse(ResultCodeEnum.ZN_NO_DATA);
 
-            List<String> questionIdList = new ArrayList<String>();
+            List<Long> questionIdList = new ArrayList<Long>();
             for (Question question : resQueList)
                 questionIdList.add(question.getQuestionId());
-            //·ÅÔÚredisÖĞ±£´æ1s,Ò»ÃëÄÚµÄÇëÇó·µ»ØÖµ²»±ä(¼´Ê¹²éÑ¯Ìõ¼ş±ä»¯Ò²ÊÇÒ»Ñù)
+            //æ”¾åœ¨redisä¸­ä¿å­˜1s,ä¸€ç§’å†…çš„è¯·æ±‚è¿”å›å€¼ä¸å˜(å³ä½¿æŸ¥è¯¢æ¡ä»¶å˜åŒ–ä¹Ÿæ˜¯ä¸€æ ·)
 //            redisUtils.set(RedisKeyConstant.KEY_QUESTIONS_LIST, resList, Constant.TEN);
-            //¿ÉÒÔÓÃ¶¨Ê±ÈÎÎñ²»¶ÏµÄË¢Êı¾İ,½«·µ»Ø½á¹ûÖ±½Ó·ÅÔÚÄÚ´æÖĞ,ÕâÑùÃ¿´ÎÇëÇó¶¼ÄÜÄÃµ½×îĞÂµÄ
+            //å¯ä»¥ç”¨å®šæ—¶ä»»åŠ¡ä¸æ–­çš„åˆ·æ•°æ®,å°†è¿”å›ç»“æœç›´æ¥æ”¾åœ¨å†…å­˜ä¸­,è¿™æ ·æ¯æ¬¡è¯·æ±‚éƒ½èƒ½æ‹¿åˆ°æœ€æ–°çš„
 //                resRedis = resList;
 //            }
 
-            //·µ»ØÖµ±à¼­
+            //è¿”å›å€¼ç¼–è¾‘
             List<Question> resultList = new ArrayList<Question>();
             if (qc.getTaskStatus() != null) {
                 GeneralUser user = AuthorHolder.getGeneralAuthor();
-                if (user == null)
-                    return new ResultResponse(ResultCodeEnum.ZN_NO_LOGIN);
-
-                List<Answer> resAnsList = answerDao.getAnswerInfoByQueList(user.getUserId(), user.getZn(), questionIdList);
-                List<String> questionIdByAnswerList = new ArrayList<String>();
+                List<Answer> resAnsList = answerDao.getAnswerInfoByQueList(user.getUserId(), user.getZn(), null, questionIdList);
+                List<Long> questionIdByAnswerList = new ArrayList<Long>();
                 if (CollectionUtils.isNotEmpty(resAnsList)) {
                     for (Answer aa : resAnsList)
                         questionIdByAnswerList.add(aa.getQuestionId());
                 }
 
                 for (Question ql : resQueList) {
-                    //Î´×öÌâÉ¸Ñ¡
+                    //æœªåšé¢˜ç­›é€‰
                     if (qc.getTaskStatus() == 0) {
                         if (CollectionUtils.isNotEmpty(questionIdByAnswerList) && questionIdByAnswerList.contains(ql.getQuestionId()))
                             continue;
                     }
-                    //ÒÑ×öÌâÉ¸Ñ¡
+                    //å·²åšé¢˜ç­›é€‰
                     if (qc.getTaskStatus() == 1) {
                         if (CollectionUtils.isNotEmpty(questionIdByAnswerList) && !questionIdByAnswerList.contains(ql.getQuestionId()))
                             continue;
@@ -131,7 +135,7 @@ public class QuestionServiceImpl implements QuestionService {
                 resultList = resQueList;
             }
 
-            // È«¾Ö±äÁ¿
+            // å…¨å±€å˜é‡
             this.setQuestionList(resultList);
 
             return new ResultResponse(ResultCodeEnum.ZN_OK, resultList);
@@ -142,19 +146,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ResultResponse questionDetail(String questionId) {
+    public ResultResponse questionDetail(Long questionId) {
         try {
             WxUser user = AuthorHolder.getWxAuthor();
-            if (user == null)
-                return new ResultResponse(ResultCodeEnum.ZN_NO_LOGIN);
-            //²éÑ¯Ìõ¼ş±à¼­
+            //æŸ¥è¯¢æ¡ä»¶ç¼–è¾‘
             QuestionCondition qc = new QuestionCondition();
             qc.setQuestionId(questionId);
             List<Question> queList = questionDao.getQuestionInfos(qc);
             if (CollectionUtils.isEmpty(queList))
                 return new ResultResponse(ResultCodeEnum.ZN_NO_DATA);
 
-            //·µ»ØÖµ±à¼­£¬ÄÃµ½×÷ÕßĞÅÏ¢²éÑ¯¶ÔÓ¦µÄÌá½»´ğ°¸¼ÇÂ¼List
+            //è¿”å›å€¼ç¼–è¾‘ï¼Œæ‹¿åˆ°ä½œè€…ä¿¡æ¯æŸ¥è¯¢å¯¹åº”çš„æäº¤ç­”æ¡ˆè®°å½•List
             AnswerCondition ac = new AnswerCondition();
             ac.setQuestionId(questionId);
             ac.setUserId(user.getUnionId());
@@ -173,34 +175,85 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public ResultResponse submitAnswer(List<AnswerParam> params) {
-        //²ÎÊıĞ£Ñé
-        WxUser user = AuthorHolder.getWxAuthor();
-        if (user == null)
-            return new ResultResponse(ResultCodeEnum.ZN_NO_LOGIN);
-
-        //²ÎÊı±à¼­
+        //å‚æ•°ç¼–è¾‘
         try {
-            Integer answerIdInt;
+            Long answerIdInt;
             String answerId = answerDao.getAnswerIdMax();
-            if (StringUtils.isEmpty(answerId))
-                answerIdInt = 1;
-            else
-                answerIdInt = Integer.parseInt(answerId);
-            List<Answer> answers = new ArrayList<Answer>();
-            for (AnswerParam param : params) {
-                if (!param.getUserId().equals(user.getUnionId()))
-                    return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
-                answerIdInt++;
-                Answer an = ParamEditUtils.editDeployAnswer(param, answerIdInt);
-                answers.add(an);
+            if (StringUtils.isEmpty(answerId)) {
+                answerIdInt = 1L;
+            } else {
+                answerIdInt = Long.valueOf(answerId);
             }
 
+            WxUser user = AuthorHolder.getWxAuthor();
+            String userId = user.getUnionId();
+            List<Answer> answers = new ArrayList<Answer>();
+            Integer score = 0;
+            boolean isBattle = false;
+            for (AnswerParam param : params) {
+                if (!param.getUserId().equals(userId)) {
+                    return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
+                }
+
+                //è·å–é—®é¢˜è¯¦æƒ…
+                List<Question> queList = questionDao.getListByQuestionIds(new ArrayList<Long>(Arrays.asList(param.getQuestionId())));
+                String commitAnswer = param.getAnswerDetail();
+                String standardAnswer = queList.get(0).getStandardAnswer();
+
+                answerIdInt++;
+                Answer an = ParamEditUtils.editDeployAnswer(param, answerIdInt);
+                //åˆ¤æ–­ç­”æ¡ˆ
+                if (commitAnswer.equals(standardAnswer)) {
+                    an.setResult(Constant.ONE);
+                    score++;
+                } else {
+                    an.setResult(Constant.ZERO);
+                }
+
+                answers.add(an);
+                //åˆ¤æ–­æ˜¯å¦æ˜¯å›¢æˆ˜ç»“æœæäº¤
+                if (StringUtils.isNotBlank(param.getBattleId())) {
+                    isBattle = true;
+                }
+            }
+            //æ’å…¥ç­”æ¡ˆç»“æœ
             int res = answerDao.insertAnswers(answers);
-            if (res <= Constant.ZERO)
+            if (res <= Constant.ZERO){
                 return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
+            }
+
+            //å›¢æˆ˜ç»“æœæäº¤æ—¶éœ€å¯¹å›¢æˆ˜è®°å½•åšæ›´æ–°
+            if (isBattle) {
+                DecimalFormat df = new DecimalFormat("0.00");//æ ¼å¼åŒ–å°æ•°
+                String rate = df.format((float)score/params.size());//è¿”å›çš„æ˜¯Stringç±»å‹
+                //æ›´æ–°è®°å½•è¡¨å›¢æˆ˜å¾—åˆ†å­—æ®µ
+                BattleRecord br = new BattleRecord();
+                br.setUserId(userId);
+                br.setBattleId(params.get(0).getBattleId());
+                br.setBattleScore(rate);
+                battleDao.updateBattleRecordInfo(br);
+            }
+
             return new ResultResponse(ResultCodeEnum.ZN_OK);
         } catch (Exception e) {
             log.error("L158_submitAnswer e:", e);
+            return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
+        }
+    }
+
+    @Override
+    public ResultResponse getErrorQuestionList() {
+        try {
+            WxUser wu = AuthorHolder.getWxAuthor();
+            List<Long> resultList = answerDao.getTenErrorAnswerInfo(wu.getUnionId(), Constant.ZERO, Constant.TEN);
+            if (CollectionUtils.isEmpty(resultList)) {
+                log.error("L248_getErrorQuestionList resultList is{}", JsonUtils.toJson(resultList));
+                return new ResultResponse(ResultCodeEnum.ZN_NO_DATA);
+            }
+
+            return new ResultResponse(ResultCodeEnum.ZN_OK, resultList);
+        } catch (Exception e) {
+            log.error("L255_getErrorQuestionList e:", e);
             return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
         }
     }

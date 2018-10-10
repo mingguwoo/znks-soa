@@ -4,15 +4,16 @@ package com.sh.znks.domain.dto;
  * Created by wuminggu on 2018/7/23.
  */
 public class AnswerParam {
-    private String questionId;          //问题id
-    private String answerDetail;        //提交答案描述
-    private String userId;              //用户id/答题者id
+    private Long questionId;          //闂id
+    private String answerDetail;        //鎻愪氦绛旀鎻忚堪
+    private String userId;              //鐢ㄦ埛id/绛旈鑰卛d
+    private String battleId;            //鍥d
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -30,5 +31,13 @@ public class AnswerParam {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getBattleId() {
+        return battleId;
+    }
+
+    public void setBattleId(String battleId) {
+        this.battleId = battleId;
     }
 }

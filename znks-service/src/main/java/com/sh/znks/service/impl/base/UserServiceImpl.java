@@ -4,14 +4,18 @@ import com.sh.znks.common.base.AuthorHolder;
 import com.sh.znks.common.base.Constant;
 import com.sh.znks.common.base.http.HttpRequestUtils;
 import com.sh.znks.common.base.util.DateUtil;
+import com.sh.znks.common.base.util.DateUtils;
 import com.sh.znks.common.base.util.JsonUtils;
 import com.sh.znks.common.base.util.ParamEditUtils;
 import com.sh.znks.common.base.util.RedisKeyConstant;
 import com.sh.znks.common.base.util.RedisUtils;
 import com.sh.znks.common.base.util.RegisterUtils;
+import com.sh.znks.common.emoji.Emoji;
 import com.sh.znks.common.result.ResultCodeEnum;
 import com.sh.znks.common.result.ResultResponse;
+import com.sh.znks.dao.BattleDao;
 import com.sh.znks.dao.UserDao;
+import com.sh.znks.domain.aq.SignRecord;
 import com.sh.znks.domain.user.ExpertUser;
 import com.sh.znks.domain.user.GeneralUser;
 import com.sh.znks.domain.user.WxUser;
@@ -28,6 +32,7 @@ import sun.misc.BASE64Encoder;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -50,24 +55,26 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
+    private BattleDao battleDao;
+    @Autowired
     private RedisUtils redisUtils;
 
     @Override
     public ResultResponse getxAuthorizationGenLoginInfo(String authorizationCode) {
         Map<String, Object> resultMap = new HashMap<>();
-        // È¡µÃÇëÇóÎ¢ĞÅµÇÂ¼Æ¾Ö¤Ğ£Ñé½Ó¿ÚµÄurl
+        // å–å¾—è¯·æ±‚å¾®ä¿¡ç™»å½•å‡­è¯æ ¡éªŒæ¥å£çš„url
         String wxUrl = ParamEditUtils.getWxUrl(wxurl, appid, secret, authorizationCode);
         try {
             Map resMap = HttpRequestUtils.httpGet(wxUrl);
 //            Integer errcode = (Integer) resMap.get("errcode");
 //            String errmsg = (String) resMap.get("errmsg");
 
-            String openid = (String) resMap.get("openid");
-            String sessionKey = (String) resMap.get("session_key");
+//            String openid = (String) resMap.get("openid");
+//            String sessionKey = (String) resMap.get("session_key");
             String unionId = (String) resMap.get("unionid");
-            //²âÊÔÊı¾İ
-//            String openid = "1234567890";
-//            String sessionKey = "key1234567890";
+            //æµ‹è¯•æ•°æ®
+            String openid = "1234567890";
+            String sessionKey = "key1234567890";
             if (StringUtils.isBlank(openid) || StringUtils.isBlank(sessionKey)) {
                 log.error("L461_getxAuthorizationGenLoginInfo res is {}", JsonUtils.toJson(resMap));
                 return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
@@ -76,7 +83,7 @@ public class UserServiceImpl implements UserService {
             boolean isRegistered = false;
             WxUser wxUser = new WxUser();
             if (StringUtils.isNotBlank(unionId)) {
-                //²éÑ¯ÊÇ·ñÒÑ×¢²áÓÃ»§ĞÅÏ¢
+                //æŸ¥è¯¢æ˜¯å¦å·²æ³¨å†Œç”¨æˆ·ä¿¡æ¯
                 wxUser = userDao.getWxUserByUnionid(unionId);
                 if (StringUtils.isNotBlank(wxUser.getNickName())) {
                     isRegistered = true;
@@ -85,50 +92,50 @@ public class UserServiceImpl implements UserService {
 
             wxUser.setOpenid(openid);
             wxUser.setSessionKey(sessionKey);
-            //½«ÓÃ»§ĞÅÏ¢ÉèÖÃµ½È«¾Ö±äÁ¿ÖĞÈ¥
+            //å°†ç”¨æˆ·ä¿¡æ¯è®¾ç½®åˆ°å…¨å±€å˜é‡ä¸­å»
             AuthorHolder.setWxAuthor(wxUser);
 
-            //È¡µÃÊÚÈ¨µÇÂ¼token
+            //å–å¾—æˆæƒç™»å½•token
             String token = ParamEditUtils.getToken(openid, sessionKey);
 
             resultMap.put("token", token);
             resultMap.put("isRegistered", isRegistered);
+            return new ResultResponse(ResultCodeEnum.ZN_OK, resultMap);
         } catch (Exception e) {
             log.error("L485_getxAuthorizationGenLoginInfoExp e:", e);
             return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
         }
-
-        return new ResultResponse(ResultCodeEnum.ZN_OK, resultMap);
     }
 
     @Override
     public ResultResponse registerWxUser(WxUser user) {
         try {
-            //²éÑ¯ÓÃ»§ÊÇ·ñÒÑ¾­×¢²á(¸ù¾İUnionId)
+            //æŸ¥è¯¢ç”¨æˆ·æ˜¯å¦å·²ç»æ³¨å†Œ(æ ¹æ®UnionId)
             WxUser wxUser = userDao.getWxUserByUnionid(user.getUnionId());
-            //ÓÃ»§ÒÑ×¢²á
+            //ç”¨æˆ·å·²æ³¨å†Œ
             if (wxUser != null && StringUtils.isNotBlank(wxUser.getNickName())) {
-                //½«ÓÃ»§ĞÅÏ¢ÉèÖÃµ½È«¾Ö±äÁ¿ÖĞÈ¥
+                //å°†ç”¨æˆ·ä¿¡æ¯è®¾ç½®åˆ°å…¨å±€å˜é‡ä¸­å»
                 this.setAuthorHolderData(wxUser);
                 return new ResultResponse(ResultCodeEnum.ZN_USER_REGISTERED);
             }
 
+            //è½¬æ¢å¾®ä¿¡æ˜µç§°å¸¦emojiè¡¨æƒ…
+            String nickNameEmoji = Emoji.emojiConverterToAlias(user.getNickName());
+            user.setNickName(nickNameEmoji);
             int res = userDao.insertWxUser(user);
             if (res <= Constant.ZERO)
                 return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
-            //½«ÓÃ»§ĞÅÏ¢ÉèÖÃµ½È«¾Ö±äÁ¿ÖĞÈ¥
+            //å°†ç”¨æˆ·ä¿¡æ¯è®¾ç½®åˆ°å…¨å±€å˜é‡ä¸­å»
             this.setAuthorHolderData(user);
+            return new ResultResponse(ResultCodeEnum.ZN_OK);
         } catch (Exception e) {
             log.error("L505_register e:", e);
             return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
         }
-
-        return new ResultResponse(ResultCodeEnum.ZN_OK);
-
     }
 
     private void setAuthorHolderData (WxUser user) {
-        //½«ÓÃ»§ĞÅÏ¢ÉèÖÃµ½È«¾Ö±äÁ¿ÖĞÈ¥
+        //å°†ç”¨æˆ·ä¿¡æ¯è®¾ç½®åˆ°å…¨å±€å˜é‡ä¸­å»
         user.setOpenid(AuthorHolder.getWxAuthor().getOpenid());
         user.setSessionKey(AuthorHolder.getWxAuthor().getSessionKey());
         AuthorHolder.setWxAuthor(user);
@@ -137,39 +144,103 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultResponse wxLogoutGen() {
         try {
-            //½«ÓÃ»§ĞÅÏ¢ÖÃÎªnull
+            //å°†ç”¨æˆ·ä¿¡æ¯ç½®ä¸ºnull
             AuthorHolder.setWxAuthor(null);
+            return new ResultResponse(ResultCodeEnum.ZN_OK);
         } catch (Exception e) {
             log.error("L514_wxLogoutGen e:", e);
             return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
         }
-        return new ResultResponse(ResultCodeEnum.ZN_OK);
     }
 
     @Override
     public ResultResponse signIn(String unionId) {
-        //µ±ÌìÈÕÆÚ
+        //å½“å¤©æ—¥æœŸ
         String nowDateString = DateUtil.getNowDateString();
-        //Ç°Ò»ÌìÈÕÆÚ
+        //å‰ä¸€å¤©æ—¥æœŸ
         Date yesterday = DateUtil.getDateBefore(new Date(), 1);
         String yesterdayStr = DateUtil.getDateString(yesterday);
-
-        //²éÑ¯µ±ÌìÊÇ·ñÒÑ¾­Ç©µ½
-        List<Date> res = userDao.getSignInfo(unionId, nowDateString);
-        if (CollectionUtils.isEmpty(res)) {
-            //ÅĞ¶Ï×òÌìµÄÊı¾İÊÇ·ñ´æÔÚ
-            List<Date> yesterdayRes = userDao.getSignInfo(unionId, yesterdayStr);
-            if (CollectionUtils.isEmpty(yesterdayRes)) {
-                //Èç¹û×òÌìµÄÊı¾İ²»´æÔÚ£¬ÔòÉ¾³ıÓÃ»§ËùÓĞµÄÇ©µ½Êı¾İ
-                userDao.deleteSignInfoByUserId(unionId);
+        try {
+            //æŸ¥è¯¢å½“å¤©æ˜¯å¦å·²ç»ç­¾åˆ°
+            List<Date> res = userDao.getSignInfo(unionId, nowDateString);
+            if (CollectionUtils.isEmpty(res)) {
+                List<Date> yesterdayRes = userDao.getSignInfo(unionId, yesterdayStr);
+                if (CollectionUtils.isEmpty(yesterdayRes)) {
+                    //å¦‚æœæ˜¨å¤©çš„æ•°æ®ä¸å­˜åœ¨ï¼Œåˆ™åˆ é™¤ç”¨æˆ·æ‰€æœ‰çš„ç­¾åˆ°æ•°æ®
+                    userDao.deleteSignInfoByUserId(unionId);
+                }
+                //æœ€åæ’å…¥ä»Šå¤©çš„æ•°æ®
+                userDao.insertSignInfo(unionId);
             }
-            //×îºó²åÈë½ñÌìµÄÊı¾İ
-            userDao.insertSignInfo(unionId);
-        }
 
-        //·µ»ØËùÓĞÌìÊıµÄÈÕÆÚ
-        List<Date> resAll = userDao.getSignInfo(unionId, null);
-        return new ResultResponse(ResultCodeEnum.ZN_OK, resAll);
+            //è¿”å›æ‰€æœ‰å¤©æ•°çš„æ—¥æœŸ
+            List<Date> resAll = userDao.getSignInfo(unionId, null);
+            //æŸ¥è¯¢æ»¡è¶³è¿ç»­ç­¾åˆ°3å¤©çš„é€ç¤¼ç‰©3ï¼Œè¿ç»­7å¤©çš„é€ç¤¼ç‰©2ï¼Œè¿ç»­10å¤©ä»¥ä¸Šçš„é€ç¤¼ç‰©1
+            if (CollectionUtils.isNotEmpty(resAll) && resAll.size() >= Constant.THREE) {
+                //å–å¾—è¦èµ é€çš„ç¤¼ç‰©
+                List<Long> giftIds = new ArrayList<>();
+                giftIds.add(battleDao.getGiftInfoByLevel(Constant.ONE));
+                giftIds.add(battleDao.getGiftInfoByLevel(Constant.TWO));
+                giftIds.add(battleDao.getGiftInfoByLevel(Constant.THREE));
+
+                //è®¾ç½®ç¤¼ç‰©
+                Long giftId;
+                switch (resAll.size()) {
+                    case 3:
+                        giftId = giftIds.get(0);
+                        break;
+                    case 7:
+                        giftId = giftIds.get(1);
+                        break;
+                    case 10:
+                        giftId = giftIds.get(2);
+                        break;
+                    default:
+                        giftId = null;
+                }
+                //æŸ¥è¯¢æ˜¯å¦å­˜åœ¨è®°å½•
+                SignRecord sr = userDao.getSignRecordInfoByUserId(unionId);
+                if (sr == null) {
+                    //æ’å…¥
+                    SignRecord srInsert = new SignRecord();
+                    srInsert.setUserId(unionId);
+                    srInsert.setSignCount(resAll.size());
+                    srInsert.setGiftId(giftId);
+                    srInsert.setStatus(Constant.ZERO);
+                    srInsert.setEffectiveTime(DateUtils.getOffSetDateTime(Constant.TEN, new Date()));
+                    userDao.insertSignRecord(srInsert);
+                } else {
+                    //æ›´æ–°
+                    sr.setSignCount(resAll.size());
+                    sr.setGiftId(giftId);
+                    sr.setStatus(Constant.ZERO);
+                    sr.setEffectiveTime(DateUtils.getOffSetDateTime(Constant.TEN, new Date()));
+                    userDao.updateSignRecord(sr);
+                }
+            }
+
+            return new ResultResponse(ResultCodeEnum.ZN_OK, resAll);
+        } catch (Exception e) {
+            log.error("L173_signIn e:", e);
+            return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
+        }
+    }
+
+    @Override
+    public ResultResponse feedBack(String userId, String content) {
+        try {
+            //è½¬æ¢emojiè¡¨æƒ…
+            String contentEmoji = Emoji.emojiConverterToAlias(content);
+            int res = userDao.insertFeedBackInfo(userId, contentEmoji);
+            if (res <= 0) {
+                log.error("L178_feedBack insert error:", res);
+                return ResultResponse.failed();
+            }
+            return new ResultResponse(ResultCodeEnum.ZN_OK);
+        } catch (Exception e) {
+            log.error("L187_feedBack e:", e);
+            return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
+        }
     }
 
 }

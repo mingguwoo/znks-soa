@@ -6,28 +6,28 @@ import java.util.Date;
  * Created by wuminggu on 2018/9/5.
  */
 public class WxUser {
-    private Long id;                        //Ö÷¼ü¡¢×ÔÔöid
+    private Long id;                        //ä¸»é”®ã€è‡ªå¢id
     private String unionId;                 //UnionID
-    private String latitude;                //Î³¶È
-    private String longitude;               //¾­¶È
-    private String nickName;                //ÓÃ»§êÇ³Æ
-    private String avatarUrl;               //ÓÃ»§Í·Ïñ
-    private String gender;                  //ÓÃ»§µÄĞÔ±ğ£¬ÖµÎª1Ê±ÊÇÄĞĞÔ£¬ÖµÎª2Ê±ÊÇÅ®ĞÔ£¬ÖµÎª0Ê±ÊÇÎ´Öª
-    private String phoneNumber;             //ÓÃ»§°ó¶¨µÄÊÖ»úºÅ
-    private String purePhoneNumber;         //Ã»ÓĞÇøºÅµÄÊÖ»úºÅ
-    private String countryCode;             //ÇøºÅ
-    private String brand;                   //ÊÖ»úÆ·ÅÆ
-    private String model;                   //ÊÖ»úĞÍºÅ
-    private String version;                 //Î¢ĞÅ°æ±¾ºÅ
-    private String platform;                //¿Í»§¶Ë»ù´¡¿â°æ±¾
-    private String city;                    //ÓÃ»§ËùÔÚ³ÇÊĞ
-    private String province;                //ÓÃ»§ËùÔÚÊ¡·İ
-    private String country;                 //ÓÃ»§ËùÔÚ¹ú¼Ò
-    private String openid;                  //ÓÃ»§Î¨Ò»±êÊ¶
-    private String sessionKey;              //»á»°ÃÜÔ¿
-    private String token;                   //µÇÂ¼Ì¬token
-    private Date created;                   //´´½¨Ê±¼ä
-    private Date modified;                  //¸üĞÂÊ±¼ä
+    private String latitude;                //çº¬åº¦
+    private String longitude;               //ç»åº¦
+    private String nickName;                //ç”¨æˆ·æ˜µç§°
+    private String avatarUrl;               //ç”¨æˆ·å¤´åƒ
+    private String gender;                  //ç”¨æˆ·çš„æ€§åˆ«ï¼Œå€¼ä¸º1æ—¶æ˜¯ç”·æ€§ï¼Œå€¼ä¸º2æ—¶æ˜¯å¥³æ€§ï¼Œå€¼ä¸º0æ—¶æ˜¯æœªçŸ¥
+    private String phoneNumber;             //ç”¨æˆ·ç»‘å®šçš„æ‰‹æœºå·
+    private String purePhoneNumber;         //æ²¡æœ‰åŒºå·çš„æ‰‹æœºå·
+    private String countryCode;             //åŒºå·
+    private String brand;                   //æ‰‹æœºå“ç‰Œ
+    private String model;                   //æ‰‹æœºå‹å·
+    private String version;                 //å¾®ä¿¡ç‰ˆæœ¬å·
+    private String platform;                //å®¢æˆ·ç«¯åŸºç¡€åº“ç‰ˆæœ¬
+    private String city;                    //ç”¨æˆ·æ‰€åœ¨åŸå¸‚
+    private String province;                //ç”¨æˆ·æ‰€åœ¨çœä»½
+    private String country;                 //ç”¨æˆ·æ‰€åœ¨å›½å®¶
+    private String openid;                  //ç”¨æˆ·å”¯ä¸€æ ‡è¯†
+    private String sessionKey;              //ä¼šè¯å¯†é’¥
+    private String token;                   //ç™»å½•æ€token
+    private Date created;                   //åˆ›å»ºæ—¶é—´
+    private Date modified;                  //æ›´æ–°æ—¶é—´
 
     public Long getId() {
         return id;

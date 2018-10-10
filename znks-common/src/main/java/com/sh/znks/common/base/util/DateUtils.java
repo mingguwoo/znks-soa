@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
  */
 public class DateUtils {
     /**
-     * date×ªString
-     * formatÊÇ×ª»»¸ñÊ½ Èç"yyyy-MM-dd"
+     * dateè½¬String
+     * formatæ˜¯è½¬æ¢æ ¼å¼ å¦‚"yyyy-MM-dd"
      * @param date
      * @param format
      * @return
@@ -23,8 +23,8 @@ public class DateUtils {
     }
 
     /**
-     * string×ªdateÀàĞÍ
-     * formatÊÇstrDateµÄ¸ñÊ½;strDateÊÇ 2018-02-26, format¾ÍÊÇ"yyyy-MM-dd"
+     * stringè½¬dateç±»å‹
+     * formatæ˜¯strDateçš„æ ¼å¼;strDateæ˜¯ 2018-02-26, formatå°±æ˜¯"yyyy-MM-dd"
      * @param strDate
      * @param format
      * @return
@@ -37,9 +37,9 @@ public class DateUtils {
     }
 
     /**
-     * »ñÈ¡Ä³¸öÈÕÆÚÖ®Ç°»òÕßÖ®ºóµÄÄ³¸öÈÕÆÚ
+     * è·å–æŸä¸ªæ—¥æœŸä¹‹å‰æˆ–è€…ä¹‹åçš„æŸä¸ªæ—¥æœŸ
      * @param nowdate
-     * @param delay ¼ä¸ôÌìÊı
+     * @param delay é—´éš”å¤©æ•°
      * @param formatter
      * @return
      */
@@ -56,7 +56,7 @@ public class DateUtils {
     }
 
     /**
-     *»ñÈ¡dateÔö¼ÓoffsetÊ±¼ä
+     *è·å–dateå¢åŠ offsetæ—¶é—´(å¤©)
      * @param offset
      * @param date
      * @return Date
@@ -69,7 +69,7 @@ public class DateUtils {
     }
 
     /**
-     *»ñÈ¡dateÔö¼ÓoffsetÊ±¼ä
+     *è·å–dateå¢åŠ offsetæ—¶é—´(å¤©)
      * @param offset
      * @param date
      * @return String yyyy-MM-dd
@@ -82,4 +82,29 @@ public class DateUtils {
         return offsetDate;
     }
 
+    /**
+     *è·å–dateå¢åŠ offsetæ—¶é—´(å°æ—¶)
+     * @param offset
+     * @param date
+     * @return Date
+     * */
+    public static Date getOffSetHourTime(Integer offset,Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR, offset);
+        return calendar.getTime();
+    }
+
+    /**
+     *è·å–dateå¢åŠ offsetæ—¶é—´(åˆ†é’Ÿ)
+     * @param offset
+     * @param date
+     * @return Date
+     * */
+    public static Date getOffSetSecondTime(Integer offset,Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.SECOND, offset);
+        return calendar.getTime();
+    }
 }

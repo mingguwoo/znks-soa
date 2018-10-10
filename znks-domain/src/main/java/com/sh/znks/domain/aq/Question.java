@@ -6,32 +6,33 @@ import java.util.Date;
  * Created by wuminggu on 2018/5/9.
  */
 public class Question {
-    private Long id;                    //Ö÷¼ü¡¢×ÔÔöid
-    private String questionId;          //ÎÊÌâid
-    private Integer grade;              //ËùÊôÄê¼¶£¨K1-K12£©
-    private Integer subjectId;          //ËùÊô¿ÆÄ¿:0Êı¡¢1Óï¡¢2Íâ
-    private Integer questionType;       //ÌâĞÍ:1µ¥Ñ¡¡¢2¶àÑ¡¡¢3ÅĞ¶Ï¡¢4Ìî¿Õ¡¢5¼ÆËã¡¢6ÎÊ´ğ¡¢7½â´ğ¡¢8ÂÛÊö¡¢9ÍêĞÎÌî¿Õ¡¢10Ö¤Ã÷¡¢11ÔÄ¶ÁÀí½â¡¢12×÷ÎÄ¡¢13ÖÇÁ¦Ìâ¡¢×Ô¶¨Òå
-    private String questionDescribe;    //ÌâÄ¿ÃèÊö
-    private String option1;             //Ñ¡ÏîÃèÊö1
-    private String option2;             //Ñ¡ÏîÃèÊö2
-    private String option3;             //Ñ¡ÏîÃèÊö3
-    private String option4;             //Ñ¡ÏîÃèÊö4
-    private String option5;             //Ñ¡ÏîÃèÊö5
-    private String option6;             //Ñ¡ÏîÃèÊö6
-    private String option7;             //Ñ¡ÏîÃèÊö7
-    private String option8;             //Ñ¡ÏîÃèÊö8
-    private String option9;             //Ñ¡ÏîÃèÊö9
-    private String option10;            //Ñ¡ÏîÃèÊö10
-    private String tips;                //ÌáÊ¾ÄÚÈİ
-    private String standardAnswer;      //±ê×¼´ğ°¸
-    private Integer difficultyLevel;    //ÄÑ¶ÈÏµÊı£¨1-5¿ÅĞÇ£©
-    private Integer questionValue;      //ÎÊÌâ¼ÛÖµ£¨0-5µÎÑª£©
-    private String expertId;            //³öÌâÕßid/×¨¼Òid
-    private String expertZn;            //³öÌâÕßÃû³Æ/×¨¼ÒÃû³Æ
-    private Integer status;             //ÌâÄ¿×´Ì¬:0Î´Í¨¹ı¡¢1Í¨¹ı¡¢2ÉóºËÖĞ
-    private String knowledge;           //ÖªÊ¶µã
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
+    private Long id;                    //ä¸»é”®ã€è‡ªå¢id
+    private Long questionId;            //é—®é¢˜id
+    private Integer grade;              //æ‰€å±å¹´çº§ï¼ˆK1-K12ï¼‰
+    private Integer subjectId;          //æ‰€å±ç§‘ç›®:0æ•°ã€1è¯­ã€2å¤–
+    private Integer questionType;       //é¢˜å‹:0å•é€‰ã€1åˆ¤æ–­
+    private String questionDescribe;    //é¢˜ç›®æè¿°
+    private String option1;             //é€‰é¡¹æè¿°1
+    private String option2;             //é€‰é¡¹æè¿°2
+    private String option3;             //é€‰é¡¹æè¿°3
+    private String option4;             //é€‰é¡¹æè¿°4
+    private String option5;             //é€‰é¡¹æè¿°5
+    private String option6;             //é€‰é¡¹æè¿°6
+    private String option7;             //é€‰é¡¹æè¿°7
+    private String option8;             //é€‰é¡¹æè¿°8
+    private String option9;             //é€‰é¡¹æè¿°9
+    private String option10;            //é€‰é¡¹æè¿°10
+    private String tips;                //æç¤ºå†…å®¹
+    private String standardAnswer;      //æ ‡å‡†ç­”æ¡ˆ
+    private Integer difficultyLevel;    //éš¾åº¦ç³»æ•°ï¼ˆ1-5é¢—æ˜Ÿï¼‰
+    private Integer questionValue;      //é—®é¢˜ä»·å€¼ï¼ˆ0-5æ»´è¡€ï¼‰
+    private String expertId;            //å‡ºé¢˜è€…id/ä¸“å®¶id
+    private String expertZn;            //å‡ºé¢˜è€…åç§°/ä¸“å®¶åç§°
+    private Integer status;             //é¢˜ç›®çŠ¶æ€:0æœªé€šè¿‡ã€1é€šè¿‡ã€2å®¡æ ¸ä¸­
+    private String knowledge;           //çŸ¥è¯†ç‚¹
+    private Integer questionArea;       //å‡ºé¢˜é¢†åŸŸï¼ˆå°å­¦ã€åˆä¸­ã€é«˜ä¸­ã€å¤§å­¦ã€è‹±è¯­ç­‰çº§ã€é©¾è€ƒã€ç¤¾ä¼šçŸ¥è¯†ã€ç›Šæ™ºç±»ã€‚ã€‚ã€‚ï¼‰
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
 
     public Question() {
     }
@@ -44,11 +45,11 @@ public class Question {
         this.id = id;
     }
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -228,6 +229,14 @@ public class Question {
         this.knowledge = knowledge;
     }
 
+    public Integer getQuestionArea() {
+        return questionArea;
+    }
+
+    public void setQuestionArea(Integer questionArea) {
+        this.questionArea = questionArea;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -271,6 +280,7 @@ public class Question {
                 ", expertZn='" + expertZn + '\'' +
                 ", status=" + status +
                 ", knowledge='" + knowledge + '\'' +
+                ", questionArea=" + questionArea +
                 ", created=" + created +
                 ", modified=" + modified +
                 '}';

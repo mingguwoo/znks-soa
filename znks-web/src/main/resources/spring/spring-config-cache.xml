@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd"
        default-autowire="byName">
 
-    <!-- jedis poolÅäÖÃ -->
+    <!-- jedis poolé…ç½® -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="${redis.maxActive}" />
         <property name="maxIdle" value="${redis.maxIdle}" />
@@ -18,7 +18,7 @@
         <property name="usePool" value="true"></property>
         <property name="hostName" value="${redis.host}" />
         <property name="port" value="${redis.port}" />
-        <!--<property name="password" value="123456" /> ²»ÐèÒªÃÜÂëÏÞÖÆÊ±²»¼Ó-->
+        <!--<property name="password" value="123456" /> ä¸éœ€è¦å¯†ç é™åˆ¶æ—¶ä¸åŠ -->
         <property name="timeout" value="${redis.timeout}" />
         <property name="database" value="${redis.db}"></property>
         <constructor-arg index="0" ref="jedisPoolConfig" />
@@ -27,7 +27,7 @@
     <!-- Redis Template -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory" />
-        <!-- Èç¹û²»ÅäÖÃSerializer£¬ÄÇÃ´´æ´¢µÄÊ±ºòÖ»ÄÜÊ¹ÓÃString£¬Èç¹ûÓÃ¶ÔÏóÀàÐÍ´æ´¢£¬ÄÇÃ´»áÌáÊ¾´íÎó can't cast to String£¡£¡£¡ -->
+        <!-- å¦‚æžœä¸é…ç½®Serializerï¼Œé‚£ä¹ˆå­˜å‚¨çš„æ—¶å€™åªèƒ½ä½¿ç”¨Stringï¼Œå¦‚æžœç”¨å¯¹è±¡ç±»åž‹å­˜å‚¨ï¼Œé‚£ä¹ˆä¼šæç¤ºé”™è¯¯ can't cast to Stringï¼ï¼ï¼ -->
         <property name="keySerializer">
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
@@ -40,11 +40,11 @@
         <property name="hashValueSerializer">
             <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
         </property>
-        <!--  ¿ªÆôÊÂÎñ -->
+        <!--  å¼€å¯äº‹åŠ¡ -->
         <property name="enableTransactionSupport" value="true"/>
     </bean>
 
-    <!-- ×Ô¶¨Òåredis¹¤¾ßÀà£¬ÔÚÐèÒª»º´æµÄµØ·½×¢Èë´ËÀà-->
+    <!-- è‡ªå®šä¹‰rediså·¥å…·ç±»ï¼Œåœ¨éœ€è¦ç¼“å­˜çš„åœ°æ–¹æ³¨å…¥æ­¤ç±»-->
     <bean id="redisUtils" class="com.sh.znks.common.base.util.RedisUtils">
         <property name="redisTemplate" ref="redisTemplate" />
     </bean>

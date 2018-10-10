@@ -11,29 +11,36 @@ import com.sh.znks.domain.user.WxUser;
  */
 public interface UserService {
     /**
-     * »ñÈ¡µÇÂ¼Ì¬token
+     * è·å–ç™»å½•æ€token
      * @param authorizationCode
      * @return
      */
     ResultResponse getxAuthorizationGenLoginInfo(String authorizationCode);
 
     /**
-     * Î¢ĞÅÊÚÈ¨ºó»ñÈ¡ÓÃ»§ĞÅÏ¢×¢²áµ½DBÀï
+     * å¾®ä¿¡æˆæƒåè·å–ç”¨æˆ·ä¿¡æ¯æ³¨å†Œåˆ°DBé‡Œ
      * @param user
      * @return
      */
     ResultResponse registerWxUser(WxUser user);
 
     /**
-     * ÍË³öµÇÂ¼(Î¢ĞÅ)
+     * é€€å‡ºç™»å½•(å¾®ä¿¡)
      * @return
      */
     ResultResponse wxLogoutGen();
 
     /**
-     * ÓÃ»§Ç©µ½
+     * ç”¨æˆ·ç­¾åˆ°
      * @param unionId
      * @return
      */
     ResultResponse signIn(String unionId);
+
+    /**
+     * ç”¨æˆ·åé¦ˆä¿¡æ¯ä¿å­˜
+     * @param unionId
+     * @return
+     */
+    ResultResponse feedBack(String unionId, String content);
 }

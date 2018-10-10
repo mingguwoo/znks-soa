@@ -6,12 +6,12 @@ import java.util.HashMap;
  * Created by wuminggu on 2018/4/19.
  */
 public class ResultResponse<V> extends HashMap<String, Object> {
-    protected static final String CODE = "code";            //·µ»ØÂë
-    protected static final String MSG = "msg";              //·µ»Ømessage
-    protected static final String DATA = "data";            //·µ»ØµÄ½á¹û¶ÔÏó
+    protected static final String CODE = "code";            //è¿”å›ç 
+    protected static final String MSG = "msg";              //è¿”å›message
+    protected static final String DATA = "data";            //è¿”å›çš„ç»“æœå¯¹è±¡
     protected String dataKey;
 
-    //¹¹ÔìÆ÷
+    //æ„é€ å™¨
     public ResultResponse(int code, String msg) {
         setCode(code);
         setMsg(msg);
@@ -56,7 +56,7 @@ public class ResultResponse<V> extends HashMap<String, Object> {
         return ResultCodeEnum.ZN_OK.getCode() == getCode();
     }
 
-    //get¡¢set
+    //getã€set
     public int getCode() {
         return Integer.valueOf(get(CODE).toString()).intValue();
     }

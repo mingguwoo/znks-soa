@@ -24,12 +24,12 @@ import java.util.List;
  * Created by wuminggu on 2018/6/15.
  */
 public class HttpRequestUtils {
-    private static Log logger = LogFactory.getLog(HttpRequestUtils.class);    //ÈÕÖ¾¼ÇÂ¼
+    private static Log logger = LogFactory.getLog(HttpRequestUtils.class);    //æ—¥å¿—è®°å½•
 
     /**
      * httpPost
-     * @param url  Â·¾¶
-     * @param jsonParam ²ÎÊı
+     * @param url  è·¯å¾„
+     * @param jsonParam å‚æ•°
      * @return
      */
     public static JSONObject httpPost(String url, JSONObject jsonParam){
@@ -37,14 +37,14 @@ public class HttpRequestUtils {
     }
 
     /**
-     * postÇëÇó
-     * @param url         urlµØÖ·
-     * @param jsonParam     ²ÎÊı
-     * @param noNeedResponse    ²»ĞèÒª·µ»Ø½á¹û
+     * postè¯·æ±‚
+     * @param url         urlåœ°å€
+     * @param jsonParam     å‚æ•°
+     * @param noNeedResponse    ä¸éœ€è¦è¿”å›ç»“æœ
      * @return
      */
     public static JSONObject httpPost(String url, JSONObject jsonParam, boolean noNeedResponse){
-        //postÇëÇó·µ»Ø½á¹û
+        //postè¯·æ±‚è¿”å›ç»“æœ
         DefaultHttpClient httpClient = new DefaultHttpClient();
         //HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead
         JSONObject jsonResult = null;
@@ -53,7 +53,7 @@ public class HttpRequestUtils {
         //method.setHeader("Accept", "application/json");
         try {
             if (null != jsonParam) {
-                //½â¾öÖĞÎÄÂÒÂëÎÊÌâ
+                //è§£å†³ä¸­æ–‡ä¹±ç é—®é¢˜
                 StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");
                 //entity.setContentEncoding("utf-8");
                 entity.setContentType("application/json");
@@ -61,26 +61,26 @@ public class HttpRequestUtils {
             }
             HttpResponse result = httpClient.execute(method);
             url = URLDecoder.decode(url, "UTF-8");
-            /**ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦**/
+            /**è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº”**/
             Integer resultCode=result.getStatusLine().getStatusCode();
             if (resultCode == 200||resultCode == 201) {
                 String str = "";
                 try {
-                    /**¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ**/
+                    /**è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ®**/
                     str = EntityUtils.toString(result.getEntity());
                     if (noNeedResponse) {
                         return null;
                     }
-                    /**°Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó**/
+                    /**æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡**/
                     jsonResult = JSONObject.fromObject(str);
                 } catch (Exception e) {
-                    logger.error("postÇëÇóÌá½»Ê§°Ü:" + url, e);
+                    logger.error("postè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
                 }
             }else{
-                logger.error("postÇëÇóÌá½»Ê§°Ü:"+url+" data:"+jsonParam.toString()+"statusCode:"+result.getStatusLine().getStatusCode());
+                logger.error("postè¯·æ±‚æäº¤å¤±è´¥:"+url+" data:"+jsonParam.toString()+"statusCode:"+result.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
-            logger.error("postÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("postè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         }finally {
             method.releaseConnection();
         }
@@ -88,9 +88,9 @@ public class HttpRequestUtils {
     }
 
     /**
-     * ·¢ËÍputÇëÇó
-     * @param url    Â·¾¶
-     * @param  jsonParam ÇëÇó²ÎÊı,json¸ñÊ½
+     * å‘é€putè¯·æ±‚
+     * @param url    è·¯å¾„
+     * @param  jsonParam è¯·æ±‚å‚æ•°,jsonæ ¼å¼
      * @return
      */
     public static JSONObject httpPut(String url, JSONObject jsonParam){
@@ -100,7 +100,7 @@ public class HttpRequestUtils {
         HttpPut putMethod = new HttpPut(url);
         try {
             if (null != jsonParam) {
-                //½â¾öÖĞÎÄÂÒÂëÎÊÌâ
+                //è§£å†³ä¸­æ–‡ä¹±ç é—®é¢˜
                 StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");
                 //entity.setContentEncoding("utf-8");
                 entity.setContentType("application/json");
@@ -108,23 +108,23 @@ public class HttpRequestUtils {
             }
             HttpResponse result = httpClient.execute(putMethod);
             url = URLDecoder.decode(url, "UTF-8");
-            /**ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦**/
+            /**è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº”**/
             Integer resultCode=result.getStatusLine().getStatusCode();
             if (resultCode == 200||resultCode == 201) {
                 String str = "";
                 try {
-                    /**¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ**/
+                    /**è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ®**/
                     str = EntityUtils.toString(result.getEntity());
-                    /**°Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó**/
+                    /**æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡**/
                     jsonResult = JSONObject.fromObject(str);
                 } catch (Exception e) {
                     //System.out.println(e);
-                    logger.error("putÇëÇóÌá½»Ê§°Ü:" + url, e);
+                    logger.error("putè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
                 }
             }
         } catch (IOException e) {
             //System.out.println(e);
-            logger.error("putÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("putè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         }finally {
             putMethod.releaseConnection();
         }
@@ -139,17 +139,17 @@ public class HttpRequestUtils {
         try {
             HttpResponse result = httpClient.execute(deleteMethod);
             url = URLDecoder.decode(url, "UTF-8");
-            /**ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦**/
+            /**è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº”**/
             if (result.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                /**¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ**/
+                /**è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ®**/
                 String strResult = EntityUtils.toString(result.getEntity());
-                /**°Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó**/
+                /**æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡**/
                 jsonResult = JSONObject.fromObject(strResult);
             } else {
-                logger.error("deleteÇëÇóÌá½»Ê§°Ü:" + url);
+                logger.error("deleteè¯·æ±‚æäº¤å¤±è´¥:" + url);
             }
         } catch (IOException e) {
-            logger.error("deleteÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("deleteè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         }finally {
             deleteMethod.releaseConnection();
         }
@@ -157,61 +157,61 @@ public class HttpRequestUtils {
     }
 
     /**
-     * ·¢ËÍgetÇëÇó
-     * @param url    Â·¾¶
+     * å‘é€getè¯·æ±‚
+     * @param url    è·¯å¾„
      * @return
      */
     public static JSONObject httpGet(String url){
-        //getÇëÇó·µ»Ø½á¹û
+        //getè¯·æ±‚è¿”å›ç»“æœ
         JSONObject jsonResult = null;
         try {
             DefaultHttpClient client = new DefaultHttpClient();
-            //·¢ËÍgetÇëÇó
+            //å‘é€getè¯·æ±‚
             HttpGet request = new HttpGet(url);
             HttpResponse response = client.execute(request);
 
-            /**ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦**/
+            /**è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº”**/
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                /**¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ**/
+                /**è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ®**/
                 String strResult = EntityUtils.toString(response.getEntity());
-                /**°Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó**/
+                /**æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡**/
                 jsonResult = JSONObject.fromObject(strResult);
                 url = URLDecoder.decode(url, "UTF-8");
             } else {
-                logger.error("getÇëÇóÌá½»Ê§°Ü:" + url);
+                logger.error("getè¯·æ±‚æäº¤å¤±è´¥:" + url);
             }
         } catch (IOException e) {
-            logger.error("getÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("getè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         }
         return jsonResult;
     }
 
     /**
-     * ·¢ËÍgetÇëÇó
-     * @param url    Â·¾¶
+     * å‘é€getè¯·æ±‚
+     * @param url    è·¯å¾„
      * @return
      */
     public static JSONObject httpGetJSONP(String url){
-        //getÇëÇó·µ»Ø½á¹û
+        //getè¯·æ±‚è¿”å›ç»“æœ
         JSONObject jsonResult = null;
         try {
             DefaultHttpClient client = new DefaultHttpClient();
-            //·¢ËÍgetÇëÇó
+            //å‘é€getè¯·æ±‚
             HttpGet request = new HttpGet(url);
             HttpResponse response = client.execute(request);
 
-            /**ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦**/
+            /**è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº”**/
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                /**¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ**/
+                /**è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ®**/
                 String strResult = JSONP2JSON(EntityUtils.toString(response.getEntity()));
-                /**°Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó**/
+                /**æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡**/
                 jsonResult = JSONObject.fromObject(strResult);
                 url = URLDecoder.decode(url, "UTF-8");
             } else {
-                logger.error("getÇëÇóÌá½»Ê§°Ü:" + url);
+                logger.error("getè¯·æ±‚æäº¤å¤±è´¥:" + url);
             }
         } catch (IOException e) {
-            logger.error("getÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("getè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         }
         return jsonResult;
     }
@@ -224,7 +224,7 @@ public class HttpRequestUtils {
 
     public static JSONObject httpPost2(String url, JSONObject jsonParam,
                                        boolean noNeedResponse) {
-        // postÇëÇó·µ»Ø½á¹û
+        // postè¯·æ±‚è¿”å›ç»“æœ
         DefaultHttpClient httpClient = new DefaultHttpClient();
         JSONObject jsonResult = null;
         HttpPost httppost = new HttpPost(url);
@@ -245,30 +245,30 @@ public class HttpRequestUtils {
             }
             HttpResponse result = httpClient.execute(httppost);
             url = URLDecoder.decode(url, "UTF-8");
-            /** ÇëÇó·¢ËÍ³É¹¦£¬²¢µÃµ½ÏìÓ¦ **/
+            /** è¯·æ±‚å‘é€æˆåŠŸï¼Œå¹¶å¾—åˆ°å“åº” **/
             Integer resultCode = result.getStatusLine().getStatusCode();
             if (resultCode == 200 || resultCode == 201) {
                 String str = "";
                 try {
-                    /** ¶ÁÈ¡·şÎñÆ÷·µ»Ø¹ıÀ´µÄjson×Ö·û´®Êı¾İ **/
+                    /** è¯»å–æœåŠ¡å™¨è¿”å›è¿‡æ¥çš„jsonå­—ç¬¦ä¸²æ•°æ® **/
                     str = EntityUtils.toString(result.getEntity());
                     if (noNeedResponse) {
                         return null;
                     }
-                    /** °Ñjson×Ö·û´®×ª»»³Éjson¶ÔÏó **/
+                    /** æŠŠjsonå­—ç¬¦ä¸²è½¬æ¢æˆjsonå¯¹è±¡ **/
                     jsonResult = JSONObject.fromObject(str);
                 } catch (Exception e) {
                     // System.out.println(e);
-                    logger.error("postÇëÇóÌá½»Ê§°Ü:" + url, e);
+                    logger.error("postè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
                 }
             } else {
-                logger.error("postÇëÇóÌá½»Ê§°Ü:" + url + " data:"
+                logger.error("postè¯·æ±‚æäº¤å¤±è´¥:" + url + " data:"
                         + jsonParam.toString() + "statusCode:"
                         + result.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
             // System.out.println(e);
-            logger.error("postÇëÇóÌá½»Ê§°Ü:" + url, e);
+            logger.error("postè¯·æ±‚æäº¤å¤±è´¥:" + url, e);
         } finally {
             httppost.releaseConnection();
         }

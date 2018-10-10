@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -27,7 +27,16 @@
         <result property="expertId" column="expert_id"/>
         <result property="expertZn" column="expert_zn"/>
         <result property="status" column="status"/>
+        <result property="questionArea" column="question_area"/>
         <result property="knowledge" column="knowledge"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
+    <resultMap id="Memorandum" type="com.sh.znks.domain.aq.Memorandum">
+        <id property="id" column="id"/>
+        <result property="questionId" column="question_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
         <result property="created" column="created"/>
         <result property="modified" column="modified"/>
     </resultMap>
@@ -35,17 +44,21 @@
     <sql id="fieldsQ">
         question_id,grade,subject_id,question_type,question_describe,option_1,option_2,option_3,option_4,
         option_5,option_6,option_7,option_8,option_9,option_10,tips,standard_answer,difficulty_level,
-        question_value,expert_id,expert_zn,status,knowledge,created
+        question_value,expert_id,expert_zn,status,question_area,knowledge,created
+    </sql>
+    <sql id="fieldsM">
+        question_id,user_id,status,created
     </sql>
 
     <insert id="insertQuestion" parameterType="Question" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO zn_questions(<include refid="fieldsQ"/>)
-        VALUES (#{questionId},#{grade},#{subjectId},#{questionType},#{questionDescribe},#{option1},#{option2},
-        #{option3},#{option4},#{option5},#{option6},#{option7},#{option8},#{option9},#{option10},#{tips},
-        #{standardAnswer},#{difficultyLevel},#{questionValue},#{expertId},#{expertZn},#{status},#{knowledge},now())
+        VALUES (#{questionId},#{grade},#{subjectId},#{questionType},#{questionDescribe},#{option1},
+        #{option2},#{option3},#{option4},#{option5},#{option6},#{option7},#{option8},#{option9},
+        #{option10},#{tips},#{standardAnswer},#{difficultyLevel},#{questionValue},#{expertId},
+        #{expertZn},#{status},#{questionArea},#{knowledge},now())
     </insert>
 
-    <select id="getQuestionIdMax" resultType="java.lang.String">
+    <select id="getQuestionIdMax" resultType="java.lang.Long">
         SELECT question_id FROM zn_questions ORDER BY question_id DESC LIMIT 1
     </select>
 
@@ -83,6 +96,9 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
+            <if test="questionArea != null">
+                AND question_area = #{questionArea}
+            </if>
             <if test="created != null">
                 AND created LIKE concat('%',#{created},'%')
             </if>
@@ -93,5 +109,67 @@
         ORDER BY created DESC
         limit #{start},#{size}
     </select>
+
+    <select id="getListByQuestionIds" parameterType="java.util.List" resultMap="Question">
+        SELECT id,<include refid="fieldsQ"/>,modified
+        FROM zn_questions
+        WHERE question_id IN (
+        <foreach collection = "list" item="item" separator = ",">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <select id="getHistoryQuestions" parameterType="com.sh.znks.domain.dto.HistoryQuestionCondition" resultMap="Question">
+        SELECT id,<include refid="fieldsQ"/>,modified
+        FROM zn_questions
+        <where>
+            <if test="grade != null and grade &gt; 0 and grade &lt; 13">
+                AND grade = #{grade}
+            </if>
+            <if test="subjectId != null">
+                AND subject_id = #{subjectId}
+            </if>
+            <if test="questionType != null">
+                AND question_type = #{questionType}
+            </if>
+            <if test="difficultyLevel != null">
+                AND difficulty_level = #{difficultyLevel}
+            </if>
+            <if test="questionValue != null">
+                AND question_value = #{questionValue}
+            </if>
+            <if test="questionArea != null">
+                AND question_area = #{questionArea}
+            </if>
+            <if test="questionIds !=null and questionIds.length() &gt; 0">
+                question_id IN (
+                <foreach collection = "questionIds" item="item"  open = "(" close = ")" separator = ",">
+                    #{item}
+                </foreach>
+                )
+            </if>
+        </where>
+        ORDER BY created DESC
+        limit #{start},#{size}
+    </select>
+
+    <insert id="insertMemorandum" parameterType="Memorandum" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO zn_memorandum(<include refid="fieldsM"/>)
+        VALUES (#{questionId},#{userId},#{status},now())
+    </insert>
+
+    <select id="getMemorandumInfo" parameterType="java.util.HashMap" resultMap="Memorandum">
+        SELECT id,<include refid="fieldsM"/>,modified FROM zn_memorandum
+        WHERE question_id = #{questionId}
+        AND user_id = #{userId}
+    </select>
+
+    <update id="updateMemorandumStatus" parameterType="Memorandum" >
+        UPDATE zn_memorandum
+        SET status = #{status},modified = now()
+        WHERE question_id = #{questionId}
+        AND user_id = #{userId}
+    </update>
 
 </mapper>

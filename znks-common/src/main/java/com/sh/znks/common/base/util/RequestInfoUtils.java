@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by wuminggu on 2018/9/14.
- * »ñÈ¡¿Í»§¶ËÇëÇóµÄip£¬ ¶Ë¿Ú
+ * è·å–å®¢æˆ·ç«¯è¯·æ±‚çš„ipï¼Œ ç«¯å£
  */
 public class RequestInfoUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestInfoUtils.class);
 
     /**
-     * »ñÈ¡¿Í»§¶ËÇëÇóµÄip
+     * è·å–å®¢æˆ·ç«¯è¯·æ±‚çš„ip
      * proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-     * Nginx´úÀí²ãÅäÖÃ,¶à²ã´úÀí»áÍ¨¹ı,·Ö¸îÉèÖÃÔÚx-forwarded-for HEADERÍ·ÖĞ
+     * Nginxä»£ç†å±‚é…ç½®,å¤šå±‚ä»£ç†ä¼šé€šè¿‡,åˆ†å‰²è®¾ç½®åœ¨x-forwarded-for HEADERå¤´ä¸­
      * @param request
      * @return
      */
@@ -34,31 +34,31 @@ public class RequestInfoUtils {
             if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
                 if(ip.equals("127.0.0.1")){
-                    //¸ù¾İÍø¿¨È¡±¾»úÅäÖÃµÄIP
+                    //æ ¹æ®ç½‘å¡å–æœ¬æœºé…ç½®çš„IP
                     InetAddress inet=null;
                     try {
                         inet = InetAddress.getLocalHost();
                     } catch (UnknownHostException e) {
-                        LOGGER.error("»ñÈ¡¿Í»§¶Ëip³ö´í", e);
+                        LOGGER.error("è·å–å®¢æˆ·ç«¯ipå‡ºé”™", e);
                     }
                     if (inet != null)
                         ip= inet.getHostAddress();
                 }
             }
-            // ¶ÔÓÚÍ¨¹ı¶à¸ö´úÀíµÄÇé¿ö£¬µÚÒ»¸öIPÎª¿Í»§¶ËÕæÊµIP,¶à¸öIP°´ÕÕ','·Ö¸î
+            // å¯¹äºé€šè¿‡å¤šä¸ªä»£ç†çš„æƒ…å†µï¼Œç¬¬ä¸€ä¸ªIPä¸ºå®¢æˆ·ç«¯çœŸå®IP,å¤šä¸ªIPæŒ‰ç…§','åˆ†å‰²
             if(ip != null && ip.length() > 15){
                 if(ip.indexOf(",")>0){
                     ip = ip.substring(0,ip.indexOf(","));
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("»ñÈ¡Ô¶³ÌIPÒì³£", e);
+            LOGGER.error("è·å–è¿œç¨‹IPå¼‚å¸¸", e);
         }
         return ip;
     }
 
     /**
-     * »ñÈ¡¿Í»§¶ËÇëÇóµÄ¶Ë¿Ú
+     * è·å–å®¢æˆ·ç«¯è¯·æ±‚çš„ç«¯å£
      * @param request
      * @return
      */
@@ -69,7 +69,7 @@ public class RequestInfoUtils {
             if (StringUtils.isBlank(port))
                 port = "80";
         } catch (Exception e) {
-            LOGGER.error("»ñÈ¡Ô¶³Ì¶Ë¿ÚÒì³£", e);
+            LOGGER.error("è·å–è¿œç¨‹ç«¯å£å¼‚å¸¸", e);
         }
         return port;
     }

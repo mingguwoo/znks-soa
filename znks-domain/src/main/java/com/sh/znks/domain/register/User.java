@@ -6,27 +6,27 @@ import java.util.Date;
  * Created by wuminggu on 2018/5/10.
  */
 public class User {
-    private Long id;                    //Ö÷¼ü¡¢×ÔÔöid
+    private Long id;                    //ä¸»é”®ã€è‡ªå¢id
     private String zn;                  //ZN
-    private String headImg;             //Í·ÏñÁ´½Ó
-    private String phoneNumber;         //µç»°ºÅÂë£¨ÊÖ»ú£©
-    private String signature;           //¸öĞÔÇ©Ãû
-    private String userDescribe;        //ÓÃ»§¼ò½é
-    private String province;            //Ê¡·İ
-    private String city;                //³ÇÊĞ
-    private String longitude;           //¶«¾­
-    private String latitude;            //±±Î³
-    private String accountNo;           //½áËãÕË»§ºÅ
-    private Integer accountType;        //ÕË»§ÀàĞÍ:0ÒøĞĞ¿¨¡¢1Ö§¸¶±¦¡¢2Î¢ĞÅ
-    private String additional;          //¸½¼ÓĞÅÏ¢
-    private Integer source;             //ÓÃ»§À´Ô´:0Ëæ»ú×¢²á¡¢1ÍÆ¼ö¡¢2»ú¹¹µ¼Èë¡¢3ÆäËû
-    private Integer status;             //ÓÃ»§×´Ì¬:0ÎŞĞ§¡¢1ÓĞĞ§¡¢2Éó²éÖĞ
-    private Integer onOffLine;          //µÇÂ¼×´Ì¬:0Î´µÇÂ¼¡¢1ÒÑµÇÂ¼
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
-    private Integer registerType;       //×¢²áÀàĞÍ:0Ñ§Éú×¢²á¡¢1×¨¼Ò×¢²á
-    private String password;            //Ã÷ÎÄÃÜÂë
-    private String passwordEncrypt;     //°µÎÄÃÜÂë
+    private String headImg;             //å¤´åƒé“¾æ¥
+    private String phoneNumber;         //ç”µè¯å·ç ï¼ˆæ‰‹æœºï¼‰
+    private String signature;           //ä¸ªæ€§ç­¾å
+    private String userDescribe;        //ç”¨æˆ·ç®€ä»‹
+    private String province;            //çœä»½
+    private String city;                //åŸå¸‚
+    private String longitude;           //ä¸œç»
+    private String latitude;            //åŒ—çº¬
+    private String accountNo;           //ç»“ç®—è´¦æˆ·å·
+    private Integer accountType;        //è´¦æˆ·ç±»å‹:0é“¶è¡Œå¡ã€1æ”¯ä»˜å®ã€2å¾®ä¿¡
+    private String additional;          //é™„åŠ ä¿¡æ¯
+    private Integer source;             //ç”¨æˆ·æ¥æº:0éšæœºæ³¨å†Œã€1æ¨èã€2æœºæ„å¯¼å…¥ã€3å…¶ä»–
+    private Integer status;             //ç”¨æˆ·çŠ¶æ€:0æ— æ•ˆã€1æœ‰æ•ˆã€2å®¡æŸ¥ä¸­
+    private Integer onOffLine;          //ç™»å½•çŠ¶æ€:0æœªç™»å½•ã€1å·²ç™»å½•
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
+    private Integer registerType;       //æ³¨å†Œç±»å‹:0å­¦ç”Ÿæ³¨å†Œã€1ä¸“å®¶æ³¨å†Œ
+    private String password;            //æ˜æ–‡å¯†ç 
+    private String passwordEncrypt;     //æš—æ–‡å¯†ç 
 
     public Long getId() {
         return id;

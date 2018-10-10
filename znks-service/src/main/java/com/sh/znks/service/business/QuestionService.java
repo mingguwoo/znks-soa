@@ -12,33 +12,37 @@ import java.util.List;
  */
 public interface QuestionService {
     /**
-     * ·¢²¼ÌâÄ¿
+     * å‘å¸ƒé¢˜ç›®
      * @param param
      * @return
      */
     public ResultResponse deployQuestion(QuestionParam param);
 
     /**
-     * ²éÑ¯ÌâÄ¿ÁĞ±í
-     * °üÀ¨ÒÑ×öÌâ¡¢Î´×öÌâÉ¸Ñ¡
+     * æŸ¥è¯¢é¢˜ç›®åˆ—è¡¨
+     * åŒ…æ‹¬å·²åšé¢˜ã€æœªåšé¢˜ç­›é€‰
      * @param condition
      * @return
      */
     public ResultResponse getQuestionList(QuestionCondition condition);
 
     /**
-     * È¡µÃÖ¸¶¨ÌâÄ¿µÄÏêÇé
+     * å–å¾—æŒ‡å®šé¢˜ç›®çš„è¯¦æƒ…
      * @param questionId
      * @return
      */
-    public ResultResponse questionDetail(String questionId);
+    public ResultResponse questionDetail(Long questionId);
 
     /**
-     * Ìá½»´ğ°¸
+     * æäº¤ç­”æ¡ˆ
      * @param params
      * @return
      */
     public ResultResponse submitAnswer(List<AnswerParam> params);
 
-
+    /**
+     * æŸ¥è¯¢é¢˜ç›®åˆ—è¡¨(é”™é¢˜)
+     * @return
+     */
+    public ResultResponse getErrorQuestionList();
 }

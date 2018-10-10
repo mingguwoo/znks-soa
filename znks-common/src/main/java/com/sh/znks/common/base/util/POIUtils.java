@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ¶ÁĞ´EXCELÎÄ¼ş
+ * è¯»å†™EXCELæ–‡ä»¶
  */
 @Component
 public class POIUtils {
@@ -33,7 +33,7 @@ public class POIUtils {
 
 
 	/**
-	 * ÅĞ¶Ïexcel°æ±¾
+	 * åˆ¤æ–­excelç‰ˆæœ¬
 	 * @param in
 	 * @param filename
 	 * @return
@@ -51,21 +51,21 @@ public class POIUtils {
 	}
 
 	/**
-	 * ¸ù¾İÎÄ¼şÂ·¾¶ºÍ¹¤×÷±¡ÏÂ±êµ¼ÈëExcelÊı¾İ
-	 * @param fileName ÎÄ¼şÃû
-	 * @param sheetIndex ¹¤×÷±¡ÏÂ±ê
+	 * æ ¹æ®æ–‡ä»¶è·¯å¾„å’Œå·¥ä½œè–„ä¸‹æ ‡å¯¼å…¥Excelæ•°æ®
+	 * @param fileName æ–‡ä»¶å
+	 * @param sheetIndex å·¥ä½œè–„ä¸‹æ ‡
 	 * @return
 	 * @throws Exception
 	 */
 	public List<List<String>> getExcelData(MultipartFile file , String fileName, int sheetIndex) throws Exception {
 		List<List<String>> dataLst = new ArrayList<List<String>>();
 		Workbook wb = openWorkbook(file.getInputStream(), fileName);
-		Sheet sheet = (Sheet) wb.getSheetAt(sheetIndex);// ÇĞ»»¹¤×÷±¡
+		Sheet sheet = (Sheet) wb.getSheetAt(sheetIndex);// åˆ‡æ¢å·¥ä½œè–„
 		Row row = null;
 		Cell cell = null;
 
 		int totalRows = sheet.getPhysicalNumberOfRows();
-		/** µÃµ½ExcelµÄÁĞÊı */
+		/** å¾—åˆ°Excelçš„åˆ—æ•° */
 		int totalCells = totalRows >= 1 && sheet.getRow(0) != null ? sheet
 				.getRow(0).getPhysicalNumberOfCells() : 0;
 		for (int r = 0; r < totalRows; r++) {
@@ -77,9 +77,9 @@ public class POIUtils {
 				cell = row.getCell(c);
 				String cellValue = "";
 				if (null != cell) {
-					// ÒÔÏÂÊÇÅĞ¶ÏÊı¾İµÄÀàĞÍ
+					// ä»¥ä¸‹æ˜¯åˆ¤æ–­æ•°æ®çš„ç±»å‹
 					switch (cell.getCellType()) {
-						case HSSFCell.CELL_TYPE_NUMERIC: // Êı×Ö
+						case HSSFCell.CELL_TYPE_NUMERIC: // æ•°å­—
 							int cellStyle = cell.getCellStyle().getDataFormat();
 							String cellStyleStr = cell.getCellStyle().getDataFormatString();
 							if ("0.00_);[Red]\\(0.00\\)".equals(cellStyleStr)) {
@@ -89,8 +89,8 @@ public class POIUtils {
 							} else if (HSSFDateUtil.isCellDateFormatted(cell)) {
 								cellValue = HSSFDateUtil.getJavaDate(
 										cell.getNumericCellValue()).toString();
-							} else if ( cellStyle == 58 || cellStyle == 179 || "m\"ÔÂ\"d\"ÈÕ\";@".equals(cellStyleStr)) {
-								// ´¦Àí×Ô¶¨ÒåÈÕÆÚ¸ñÊ½£ºmÔÂdÈÕ(Í¨¹ıÅĞ¶Ïµ¥Ôª¸ñµÄ¸ñÊ½id½â¾ö£¬idµÄÖµÊÇ58)
+							} else if ( cellStyle == 58 || cellStyle == 179 || "m\"æœˆ\"d\"æ—¥\";@".equals(cellStyleStr)) {
+								// å¤„ç†è‡ªå®šä¹‰æ—¥æœŸæ ¼å¼ï¼šmæœˆdæ—¥(é€šè¿‡åˆ¤æ–­å•å…ƒæ ¼çš„æ ¼å¼idè§£å†³ï¼Œidçš„å€¼æ˜¯58)
 								SimpleDateFormat sdf = new SimpleDateFormat(
 										"yyyy-MM-dd");
 								double value = cell.getNumericCellValue();
@@ -98,7 +98,7 @@ public class POIUtils {
 										.getJavaDate(value);
 								cellValue = sdf.format(date);
 //						} else if ((cellStyle == 181 || cellStyle == 177|| cellStyle == 176)&& cellStyleStr.endsWith("@")) {
-								//ĞÇÆÚ¼¸ ExcelÖĞµÄÈÕÆÚ×Ô¶¨Òå¸ñÊ½ cellStyle²»¹Ì¶¨£¬¹Ê²ÉÓÃ  "[$-804]aaaa;@"À´ÅĞ¶Ï
+								//æ˜ŸæœŸå‡  Excelä¸­çš„æ—¥æœŸè‡ªå®šä¹‰æ ¼å¼ cellStyleä¸å›ºå®šï¼Œæ•…é‡‡ç”¨  "[$-804]aaaa;@"æ¥åˆ¤æ–­
 							} else if ("[$-804]aaaa;@".equals(cellStyleStr)) {
 								SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
 								double value = cell.getNumericCellValue();
@@ -112,13 +112,13 @@ public class POIUtils {
 										.trim();
 							}
 							break;
-						case HSSFCell.CELL_TYPE_STRING: // ×Ö·û´®
+						case HSSFCell.CELL_TYPE_STRING: // å­—ç¬¦ä¸²
 							cellValue = cell.getStringCellValue();
 							break;
 						case HSSFCell.CELL_TYPE_BOOLEAN: // Boolean
 							cellValue = cell.getBooleanCellValue() + "";
 							break;
-						case HSSFCell.CELL_TYPE_FORMULA: // ¹«Ê½
+						case HSSFCell.CELL_TYPE_FORMULA: // å…¬å¼
 							try {
 								cellValue = String.valueOf(cell.getNumericCellValue());
 							} catch (IllegalStateException e) {
@@ -129,15 +129,15 @@ public class POIUtils {
 								}
 							}
 							break;
-						case HSSFCell.CELL_TYPE_BLANK: // ¿ÕÖµ
+						case HSSFCell.CELL_TYPE_BLANK: // ç©ºå€¼
 //						cellValue = "";
 							break;
 
-						case HSSFCell.CELL_TYPE_ERROR: // ¹ÊÕÏ
-//						cellValue = "·Ç·¨×Ö·û";
+						case HSSFCell.CELL_TYPE_ERROR: // æ•…éšœ
+//						cellValue = "éæ³•å­—ç¬¦";
 							break;
 						default:
-//						cellValue = "Î´ÖªÀàĞÍ";
+//						cellValue = "æœªçŸ¥ç±»å‹";
 							break;
 					}
 				}
@@ -149,7 +149,7 @@ public class POIUtils {
 	}
 
 	/**
-	 * ÅĞ¶Ïµ±Ç°ĞĞÄÚËùÓĞµ¥Ôª¸ñÊÇ·ñÎª¿Õ
+	 * åˆ¤æ–­å½“å‰è¡Œå†…æ‰€æœ‰å•å…ƒæ ¼æ˜¯å¦ä¸ºç©º
 	 *
 	 * @param row
 	 * @param totalCells
@@ -171,7 +171,7 @@ public class POIUtils {
 					case Cell.CELL_TYPE_BOOLEAN:
 						sb.append(String.valueOf(cell.getBooleanCellValue()));
 						break;
-					case Cell.CELL_TYPE_FORMULA://ÅĞ¶Ï¹«Ê½Éú³ÉµÄ½á¹û
+					case Cell.CELL_TYPE_FORMULA://åˆ¤æ–­å…¬å¼ç”Ÿæˆçš„ç»“æœ
 						String value = "";
 						try {
 							value = String.valueOf(cell.getNumericCellValue());

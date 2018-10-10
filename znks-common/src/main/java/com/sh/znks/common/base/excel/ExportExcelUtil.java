@@ -16,24 +16,24 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * µ¼³öexcel¹¤¾ßÀà
+ * å¯¼å‡ºexcelå·¥å…·ç±»
  */
 public class ExportExcelUtil {
     public static final Logger LOGGER = LoggerFactory.getLogger(ExportExcelUtil.class);
     private static final String RESPONSE_CONTENT_TYPE = "application/vnd.ms-excel;charset=";
     private static final String CHARSET_ISO = "ISO-8859-1";
     private static final String EXCEL_SUFFIX = ".xls";
-    private static final String EXCEL_EXCEPTION = "[µ¼³öexcelÒì³£]";
-    private static final String EXCEL_CLOSE_EXCEPTION = "[closeÒì³£]";
+    private static final String EXCEL_EXCEPTION = "[å¯¼å‡ºexcelå¼‚å¸¸]";
+    private static final String EXCEL_CLOSE_EXCEPTION = "[closeå¼‚å¸¸]";
 
     /**
-     * µ¼³öexcel
-     * @param export ËùĞè²ÎÊı @see ExportExcelEntity
+     * å¯¼å‡ºexcel
+     * @param export æ‰€éœ€å‚æ•° @see ExportExcelEntity
      */
     public static void exportExcel(ExportExcelEntity export) {
         ServletOutputStream sos = null;
         HttpServletResponse response = export.getResponse();
-        Map<String, Object> exportMap = export.getExportMap(); //½«Òªµ¼³öµÄÁĞ±íputµ½mapÖĞ£¬keyÖµÓëftlÎÄ¼ş±£³Ö¶ÔÓ¦
+        Map<String, Object> exportMap = export.getExportMap(); //å°†è¦å¯¼å‡ºçš„åˆ—è¡¨putåˆ°mapä¸­ï¼Œkeyå€¼ä¸ftlæ–‡ä»¶ä¿æŒå¯¹åº”
         String defaultEncoding = export.getDefaultEncoding();
         String exportPath = export.getExportPath();
         String templateName = export.getTemplateName();

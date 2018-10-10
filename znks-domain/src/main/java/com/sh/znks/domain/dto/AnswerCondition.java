@@ -6,35 +6,36 @@ import java.util.Date;
  * Created by wuminggu on 2018/7/13.
  */
 public class AnswerCondition {
-    private String answerId;            //»Ø´ğid
-    private String questionId;          //ÎÊÌâid
-    private String userId;              //ÓÃ»§id/´ğÌâÕßid
-    private String userZn;              //ÓÃ»§zn/´ğÌâÕßzn
-    private String answerDetail;        //Ìá½»´ğ°¸ÃèÊö
-    private Integer result;             //½á¹û:0´íÎó¡¢1ÕıÈ·
-    private String expertId;            //³öÌâÕßid/×¨¼Òid
-    private String expertZn;            //³öÌâÕßÃû³Æ/×¨¼ÒÃû³Æ
-    private String basis;               //ÅĞ¶ÏÀíÓÉ
-    private Date judgeTime;             //ÅĞ¶ÏÊ±¼ä
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
-    private Integer status;             //´ğÌâ×´Ì¬£º0Î´ÉóºË¡¢1ÉóºËÖĞ¡¢2ÉóºËÍê³É¡¢3ÒÑ½áËã
-    private Integer start = 0;          //²éÑ¯¿ªÊ¼ÌõÊı£¨Ä¬ÈÏ:0¿ªÊ¼£©
-    private Integer size = 10;          //²éÑ¯ÏŞÖÆÌõÊı£¨Ä¬ÈÏ:10Ìõ£©
+    private Long answerId;              //å›ç­”id
+    private Long questionId;            //é—®é¢˜id
+    private String userId;              //ç”¨æˆ·id/ç­”é¢˜è€…id
+    private String userZn;              //ç”¨æˆ·zn/ç­”é¢˜è€…zn
+    private String answerDetail;        //æäº¤ç­”æ¡ˆæè¿°
+    private Integer result;             //ç»“æœ:0é”™è¯¯ã€1æ­£ç¡®
+    private String expertId;            //å‡ºé¢˜è€…id/ä¸“å®¶id
+    private String expertZn;            //å‡ºé¢˜è€…åç§°/ä¸“å®¶åç§°
+    private String basis;               //åˆ¤æ–­ç†ç”±
+    private Date judgeTime;             //åˆ¤æ–­æ—¶é—´
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
+    private Integer status;             //ç­”é¢˜çŠ¶æ€ï¼š0æœªå®¡æ ¸ã€1å®¡æ ¸ä¸­ã€2å®¡æ ¸å®Œæˆã€3å·²ç»“ç®—
+    private String connectId;           //è¿æ¥idï¼ˆå¦‚ï¼šå›¢idï¼‰
+    private Integer start = 0;          //æŸ¥è¯¢å¼€å§‹æ¡æ•°ï¼ˆé»˜è®¤:0å¼€å§‹ï¼‰
+    private Integer size = 10;          //æŸ¥è¯¢é™åˆ¶æ¡æ•°ï¼ˆé»˜è®¤:10æ¡ï¼‰
 
-    public String getAnswerId() {
+    public Long getAnswerId() {
         return answerId;
     }
 
-    public void setAnswerId(String answerId) {
+    public void setAnswerId(Long answerId) {
         this.answerId = answerId;
     }
 
-    public String getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -124,6 +125,14 @@ public class AnswerCondition {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getConnectId() {
+        return connectId;
+    }
+
+    public void setConnectId(String connectId) {
+        this.connectId = connectId;
     }
 
     public Integer getStart() {

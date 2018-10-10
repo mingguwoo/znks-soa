@@ -10,38 +10,54 @@ import java.util.List;
  * Created by wuminggu on 2018/5/10.
  */
 public class Constant {
-    //¿Õ×Ö·û´®
+    //ç©ºå­—ç¬¦ä¸²
     public static final String BLANK = "";
-    //ÏîÄ¿ÃûËõĞ´
+    //é€—å·
+    public static final String COMMA = ",";
+    //é¡¹ç›®åç¼©å†™
     public static final String PJN = "zn";
     //MD5
     public static final String MD5 = "MD5";
-    //×¢²áºÅ»ùÊı
+    //æ³¨å†Œå·åŸºæ•°
     public static final int BASE_NO = 100000000;
-    //Òì³£Ä¬ÈÏÖµ
+    //å¼‚å¸¸é»˜è®¤å€¼
     public static final int EXC_NO = -1;
-    //³£Á¿0
+    //å¸¸é‡0
     public static final int ZERO = 0;
-    //³£Á¿1
+    //å¸¸é‡1
     public static final int ONE = 1;
-    //³£Á¿2
+    //å¸¸é‡2
     public static final int TWO = 2;
-    //³£Á¿3
+    //å¸¸é‡3
     public static final int THREE = 3;
-    //³£Á¿10
+    //å¸¸é‡10
     public static final int TEN = 10;
-    //Äê¼¶K12
+    //å¸¸é‡10
+    public static final int THIRTY = 30;
+    //å¸¸é‡10
+    public static final int SIXTY = 60;
+    //å¸¸é‡10
+    public static final int NINETY = 90;
+    //å¸¸é‡100
+    public static final int HUNDRED = 100;
+    //å¹´çº§K12
     public static final List<Integer> GRADEK12 = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
-    //¿ÆÄ¿£¨0Êı¡¢1Óï¡¢2Íâ£©
+    //ç§‘ç›®ï¼ˆ0æ•°ã€1è¯­ã€2å¤–ï¼‰
     public static final List<Integer> SUBJECT = new ArrayList<Integer>(Arrays.asList(0,1,2));
-    //ÌâĞÍ
+    //é¢˜å‹
     public static final List<Integer> QUESTIONTYPES = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16));
-    //ÎÊÌâ¼ÛÖµ£¨0-5µÎÑª£©
+    //é—®é¢˜ä»·å€¼ï¼ˆ0-5æ»´è¡€ï¼‰
     public static final List<Integer> BLOOD = new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5));
-    //ÄÑ¶ÈÏµÊı£¨1-5¿ÅĞÇ£©
+    //éš¾åº¦ç³»æ•°ï¼ˆ1-5é¢—æ˜Ÿï¼‰
     public static final List<Integer> DIFFICULTY_DEGREE = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
-    //´ğÌâÕß¸öÈËĞÅÏ¢JSON×Ö¶ÎÃû
+    //ç­”é¢˜è€…ä¸ªäººä¿¡æ¯JSONå­—æ®µå
     public static final String GENERAL_USER_INFO = "generalUserInfo";
-    //×¨¼Ò¸öÈËĞÅÏ¢JSON×Ö¶ÎÃû
+    //ä¸“å®¶ä¸ªäººä¿¡æ¯JSONå­—æ®µå
     public static final String EXPERT_USER_INFO = "expertUserInfo";
+    //å¼€å›¢å£å·
+    public static final String BATTLE_SLOGAN = "é©¬ä¸Šè¿›å…¥åƒé¢˜æˆ˜åœºï¼ŒåŠ æ²¹ï¼Œç‰¹ç§ç”Ÿï¼";
+    //ç­”æ¡ˆè‡ªåŠ¨å®¡æ ¸
+    public static final String AUTO_JUDGE = "auto judged!";
+    //ç³»ç»Ÿid
+    public static final String SYS = "system";
 }

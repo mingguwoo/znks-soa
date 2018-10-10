@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -16,12 +16,13 @@
         <result property="basis" column="basis"/>
         <result property="judgeTime" column="judge_time"/>
         <result property="status" column="status"/>
+        <result property="connectId" column="connect_id"/>
         <result property="created" column="created"/>
         <result property="modified" column="modified"/>
     </resultMap>
 
     <sql id="fieldsA">
-        answer_id,question_id,answer_detail,user_id,user_zn,result,expert_id,expert_zn,basis,judge_time,status,created
+        answer_id,question_id,answer_detail,user_id,user_zn,result,expert_id,expert_zn,basis,judge_time,status,connect_id,created
     </sql>
 
     <insert id="insertAnswers" parameterType="java.util.List">
@@ -30,7 +31,7 @@
         <foreach collection="list" item="answers" separator=",">
             (#{answers.answerId},#{answers.questionId},#{answers.answerDetail},#{answers.userId},
             #{answers.userZn},#{answers.result},#{answers.expertId},#{answers.expertZn},#{answers.basis},
-            #{answers.judgeTime},#{answers.status},now())
+            #{answers.judgeTime},#{answers.status},#{answers.connectId},now())
         </foreach>
     </insert>
 
@@ -75,6 +76,9 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
+            <if test="connectId != null">
+                AND connect_id = #{connectId}
+            </if>
             <if test="created != null">
                 AND created LIKE concat('%',#{created},'%')
             </if>
@@ -96,6 +100,9 @@
             <if test="userZn != null and userZn.length() &gt; 0">
                 AND user_zn = #{userZn}
             </if>
+            <if test="connectId != null">
+                AND connect_id = #{connectId}
+            </if>
             <if test="questionIdList != null and questionIdList.size > 0 ">
                 AND question_id IN
                 <foreach collection = "questionIdList" item="item"  open = "(" close = ")" separator = ",">
@@ -104,5 +111,34 @@
             </if>
         </where>
     </select>
+    
+    <select id="getCountByOneHour" resultType="java.lang.Long">
+        SELECT count(1) FROM zn_answer
+        WHERE DATE_FORMAT(created,"%Y-%m-%d %H:%i:%s") &gt; DATE_ADD(DATE_FORMAT(NOW(),"%Y-%m-%d %H:%i:%s"), INTERVAL -1 HOUR)
+        GROUP BY user_id
+    </select>
 
+    <select id="getErrorAnswerCount" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT count(1) FROM zn_answer
+        WHERE result = 0
+        AND status = 2
+        AND user_id = #{userId}
+    </select>
+
+    <select id="getTenErrorAnswerInfo" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        SELECT DISTINCT question_id FROM zn_answer
+        WHERE result = 0
+        AND status = 2
+        AND user_id = #{userId}
+        ORDER BY created DESC
+        limit #{start},#{size}
+    </select>
+
+    <select id="getQuestionIdsByAnswer" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT DISTINCT question_id FROM zn_answer
+        WHERE status = 2
+        AND user_id = #{userId}
+        AND DATE_FORMAT(created,"%Y-%m-%d %H:%i:%s") &gt; DATE_ADD(DATE_FORMAT(NOW(),"%Y-%m-%d %H:%i:%s"), INTERVAL -30 DAY)
+        ORDER BY created DESC
+    </select>
 </mapper>

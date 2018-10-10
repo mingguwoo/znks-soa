@@ -26,16 +26,32 @@ public class ExtraController {
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     @ResponseBody
     public ResultResponse signIn(String unionId) {
-        //У�������
+        //校验必填项
         if (StringUtils.isBlank(unionId)) {
             return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
         }
-        //У���û��Ƿ��¼�û�
+        //校验用户是否登录用户
         WxUser user = AuthorHolder.getWxAuthor();
         if (!user.getUnionId().equals(unionId)) {
             return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
         }
 
         return userService.signIn(unionId);
+    }
+
+    @RequestMapping(value = "/feedBack", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultResponse feedBack(String unionId, String content) {
+        //校验必填项
+        if (StringUtils.isBlank(unionId) || StringUtils.isBlank(content) || content.length() > 100) {
+            return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
+        }
+        //校验用户是否登录用户
+        WxUser user = AuthorHolder.getWxAuthor();
+        if (!user.getUnionId().equals(unionId)) {
+            return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
+        }
+
+        return userService.feedBack(unionId, content);
     }
 }

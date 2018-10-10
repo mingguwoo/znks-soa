@@ -1,6 +1,7 @@
 package com.sh.znks.dao.impl;
 
 import com.sh.znks.dao.UserDao;
+import com.sh.znks.domain.aq.SignRecord;
 import com.sh.znks.domain.user.ExpertUser;
 import com.sh.znks.domain.user.GeneralUser;
 import com.sh.znks.domain.user.WxUser;
@@ -53,4 +54,48 @@ public class UserDaoImpl implements UserDao {
     public int deleteSignInfoByUserId(String userId) {
         return znksSqlSession.delete("WxUser.deleteSignInfoByUserId", userId);
     }
+
+    @Override
+    public int insertFeedBackInfo(String userId, String content) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("userId", userId);
+        queryMap.put("content", content);
+        return znksSqlSession.insert("WxUser.insertFeedBackInfo", queryMap);
+    }
+
+    @Override
+    public List<WxUser> getUserListByUnionIds(List<String> unionIds) {
+        return znksSqlSession.selectList("WxUser.getUserListByUnionIds", unionIds);
+    }
+
+    @Override
+    public int insertSignRecord(SignRecord signRecord) {
+        return znksSqlSession.insert("WxUser.insertSignRecord", signRecord);
+    }
+
+    @Override
+    public int updateSignRecord(SignRecord signRecord) {
+        return znksSqlSession.update("WxUser.updateSignRecord", signRecord);
+    }
+
+    @Override
+    public SignRecord getSignRecordInfoByUserId(String userId) {
+        return znksSqlSession.selectOne("WxUser.getSignRecordInfoByUserId", userId);
+    }
+
+    @Override
+    public int updateExpirySignRecord() {
+        return znksSqlSession.update("WxUser.updateExpirySignRecord");
+    }
+
+    @Override
+    public List<WxUser> getTenUserInfoByRelation(String latitude, String longitude, Integer start, Integer size) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("latitude", latitude);
+        queryMap.put("longitude", longitude);
+        queryMap.put("start", start);
+        queryMap.put("size", size);
+        return znksSqlSession.selectList("WxUser.getTenUserInfoByRelation", queryMap);
+    }
+
 }

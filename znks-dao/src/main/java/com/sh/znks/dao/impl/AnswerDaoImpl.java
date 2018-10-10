@@ -40,11 +40,37 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public List<Answer> getAnswerInfoByQueList(String userId, String userZn, List<String> questionIdList) {
+    public List<Answer> getAnswerInfoByQueList(String userId, String userZn, String connectId, List<Long> questionIdList) {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("userId", userId);
         queryMap.put("userZn", userZn);
+        queryMap.put("connectId", connectId);
         queryMap.put("questionIdList", questionIdList);
         return znksSqlSession.selectList("Answer.getAnswerInfoByQueList", queryMap);
     }
+
+    @Override
+    public Long getCountByOneHour() {
+        return znksSqlSession.selectOne("Answer.getCountByOneHour");
+    }
+
+    @Override
+    public Long getErrorAnswerCount(String userId) {
+        return znksSqlSession.selectOne("Answer.getErrorAnswerCount", userId);
+    }
+
+    @Override
+    public List<Long> getTenErrorAnswerInfo(String userId, Integer start, Integer size) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("userId", userId);
+        queryMap.put("start", start);
+        queryMap.put("size", size);
+        return znksSqlSession.selectList("Answer.getTenErrorAnswerInfo", queryMap);
+    }
+
+    @Override
+    public List<String> getQuestionIdsByAnswer(String userId) {
+        return znksSqlSession.selectList("Answer.getQuestionIdsByAnswer", userId);
+    }
+
 }

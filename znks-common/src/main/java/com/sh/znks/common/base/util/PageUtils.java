@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class PageUtils {
     /**
-     * Ê¹ÓÃÈ«Á¿Êı¾İÉèÖÃ·ÖÒ³½á¹û£¨ÊÊÓÃÓÚÇëÇó½Ó¿ÚµÈ¸´ÔÓ³¡¾°£©
-     * @param data          £º È«Á¿Êı¾İlist
-     * @param currentPage  £º µ±Ç°Ò³ÃæÊı
-     * @param pageSize     £º Ã¿¸öÒ³ÃæµÄ¼ÇÂ¼Êı
-     * @return  ·ÖÒ³Ò³Ãæ
+     * ä½¿ç”¨å…¨é‡æ•°æ®è®¾ç½®åˆ†é¡µç»“æœï¼ˆé€‚ç”¨äºè¯·æ±‚æ¥å£ç­‰å¤æ‚åœºæ™¯ï¼‰
+     * @param data          ï¼š å…¨é‡æ•°æ®list
+     * @param currentPage  ï¼š å½“å‰é¡µé¢æ•°
+     * @param pageSize     ï¼š æ¯ä¸ªé¡µé¢çš„è®°å½•æ•°
+     * @return  åˆ†é¡µé¡µé¢
      */
     public static <T> Page<T> setPageWithAllData(List<T> data, Integer currentPage, Integer pageSize)
     {
@@ -20,15 +20,15 @@ public class PageUtils {
         page.setPageSize(pageSize);
         page.setTotalRows(data.size());
 
-        // ·ÖÒ³µÄµÚÒ»ÌõÊı¾İµÄÆ«ÒÆÁ¿(ÏÂ±ê) inclusive
+        // åˆ†é¡µçš„ç¬¬ä¸€æ¡æ•°æ®çš„åç§»é‡(ä¸‹æ ‡) inclusive
         int fromIndex = (currentPage - 1) * pageSize;
-        // ·ÖÒ³µÄ×îºóÒ»ÌõÊı¾İµÄÆ«ÒÆÁ¿(ÏÂ±ê) exclusive
+        // åˆ†é¡µçš„æœ€åä¸€æ¡æ•°æ®çš„åç§»é‡(ä¸‹æ ‡) exclusive
         int toIndex = currentPage * pageSize;
 
-        // ×îºóÒ»Ò³
+        // æœ€åä¸€é¡µ
         if (toIndex  >= page.getTotalRows()) {
             page.setHasNext(false);
-            // ÖØĞÂĞŞÕıÏÂ±ê
+            // é‡æ–°ä¿®æ­£ä¸‹æ ‡
             toIndex = data.size();
         } else {
             page.setHasNext(true);
@@ -44,12 +44,12 @@ public class PageUtils {
     }
 
     /**
-     * Ö±½ÓÉèÖÃ·ÖÒ³½á¹û£¨ÊÊÓÃÓÚÒÑ¾­´¦ÀíºÃ·ÖÒ³µÄ½á¹¹£¬ÈçÔÚÊı¾İ¿âÖĞ·ÖºÃÒ³µÄ²éÑ¯£©
-     * @param data          £º µ±Ç°·ÖÒ³µÄÊı¾İlist
-     * @param totalRows    £º ×ÜµÄ¼ÇÂ¼Êı
-     * @param currentPage  £º µ±Ç°Ò³ÃæÊı
-     * @param pageSize     £º Ã¿¸öÒ³ÃæµÄ¼ÇÂ¼Êı
-     * @return  ·ÖÒ³Ò³Ãæ
+     * ç›´æ¥è®¾ç½®åˆ†é¡µç»“æœï¼ˆé€‚ç”¨äºå·²ç»å¤„ç†å¥½åˆ†é¡µçš„ç»“æ„ï¼Œå¦‚åœ¨æ•°æ®åº“ä¸­åˆ†å¥½é¡µçš„æŸ¥è¯¢ï¼‰
+     * @param data          ï¼š å½“å‰åˆ†é¡µçš„æ•°æ®list
+     * @param totalRows    ï¼š æ€»çš„è®°å½•æ•°
+     * @param currentPage  ï¼š å½“å‰é¡µé¢æ•°
+     * @param pageSize     ï¼š æ¯ä¸ªé¡µé¢çš„è®°å½•æ•°
+     * @return  åˆ†é¡µé¡µé¢
      */
     public static <T> Page<T> setPageWithDirectData(List<T> data, int totalRows, Integer currentPage, Integer pageSize)
     {
@@ -58,10 +58,10 @@ public class PageUtils {
         page.setPageSize(pageSize);
         page.setTotalRows(totalRows);
 
-        // ÊÇ×îºóÒ»Ò³
+        // æ˜¯æœ€åä¸€é¡µ
         if (currentPage * pageSize  >= page.getTotalRows()) {
             page.setHasNext(false);
-            // ÖØĞÂĞŞÕıÏÂ±ê
+            // é‡æ–°ä¿®æ­£ä¸‹æ ‡
         } else {
             page.setHasNext(true);
         }
@@ -73,10 +73,10 @@ public class PageUtils {
 
 
     /**
-     * ÉèÖÃÒ»¸ö¿ÕµÄ·ÖÒ³£¨ÊÊÓÃÓÚ²éÑ¯Êı¾İ²»´æÔÚÊ±ºòµÄÄ¬ÈÏ·µ»Ø£©
-     * @param currentPage  £º µ±Ç°Ò³ÃæÊı
-     * @param pageSize     £º Ã¿¸öÒ³ÃæµÄ¼ÇÂ¼Êı
-     * @return  ·ÖÒ³Ò³Ãæ
+     * è®¾ç½®ä¸€ä¸ªç©ºçš„åˆ†é¡µï¼ˆé€‚ç”¨äºæŸ¥è¯¢æ•°æ®ä¸å­˜åœ¨æ—¶å€™çš„é»˜è®¤è¿”å›ï¼‰
+     * @param currentPage  ï¼š å½“å‰é¡µé¢æ•°
+     * @param pageSize     ï¼š æ¯ä¸ªé¡µé¢çš„è®°å½•æ•°
+     * @return  åˆ†é¡µé¡µé¢
      */
     public static <T> Page<T> setEmptyPage(Integer currentPage, Integer pageSize)
     {

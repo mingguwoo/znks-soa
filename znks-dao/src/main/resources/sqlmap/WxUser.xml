@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -24,10 +24,23 @@
         <result property="created" column="created"/>
         <result property="modified" column="modified"/>
     </resultMap>
+    <resultMap type="com.sh.znks.domain.aq.SignRecord" id="SignRecord">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="signCount" column="sign_count"/>
+        <result property="giftId" column="gift_id"/>
+        <result property="status" column="status"/>
+        <result property="effectiveTime" column="effective_time"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
 
     <sql id="wxFields">
         union_id,nick_name,avatar_url,gender,latitude,longitude,phone_number,pure_phone_number,
         country_code,brand,model,version,platform,city,province,country,created
+    </sql>
+    <sql id="srFields">
+        user_id,sign_count,gift_id,status,effective_time,created
     </sql>
 
     <insert id="insertWxUser" parameterType="WxUser" useGeneratedKeys="true" keyProperty="id">
@@ -61,5 +74,64 @@
     <delete id="deleteSignInfoByUserId" parameterType="java.lang.String">
         DELETE FROM zn_sign WHERE user_id = #{userId}
     </delete>
+
+    <insert id="insertSignRecord" parameterType="SignRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO zn_sign_record(<include refid="srFields"/>)
+        VALUES (#{userId},#{signCount},#{giftId},#{status},#{effectiveTime},now())
+    </insert>
+
+    <update id="updateSignRecord" parameterType="SignRecord" >
+        UPDATE zn_sign_record
+        <set >
+            <if test="signCount != null" >
+                sign_count = #{signCount},
+            </if>
+            <if test="giftId != null" >
+                gift_id = #{giftId},
+            </if>
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="effectiveTime != null" >
+                effective_time = #{effectiveTime},
+            </if>
+            modified = now()
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="getSignRecordInfoByUserId" parameterType="java.lang.String" resultMap="SignRecord">
+        SELECT id,<include refid="srFields"/>,modified FROM zn_sign_record
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateExpirySignRecord">
+        UPDATE zn_sign_record
+        SET status = 2,
+            modified = now()
+        WHERE DATE_FORMAT(effective_time,"%Y-%m-%d %H:%i:%s") &lt; DATE_ADD(DATE_FORMAT(NOW(),"%Y-%m-%d %H:%i:%s"), INTERVAL -3 DAY)
+    </update>
+
+    <insert id="insertFeedBackInfo" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO zn_feed_back(user_id,content,created) VALUES (#{userId},#{content},now())
+    </insert>
+
+    <select id="getUserListByUnionIds" parameterType="java.util.List" resultMap="WxUser">
+        SELECT id,<include refid="wxFields"/>,modified FROM zn_wx_user
+        WHERE union_id IN (
+        <foreach collection = "unionIds" item="item"  open = "(" close = ")" separator = ",">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <select id="getTenUserInfoByRelation" parameterType="java.util.HashMap" resultMap="WxUser">
+        SELECT id,<include refid="wxFields"/>,modified
+        FROM zn_wx_user
+        WHERE latitude LIKE concat('%',#{latitude},'%')
+        AND longitude LIKE concat('%',#{longitude},'%')
+        ORDER BY latitude ASC,longitude ASC
+        limit #{start},#{size}
+    </select>
 
 </mapper>

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     private final static Logger log = LoggerFactory.getLogger(RedisUtils.class);
 
-    // redisÊ¹ÓÃÄ£°å
+    // redisä½¿ç”¨æ¨¡æ¿
     private RedisTemplate<String, Object> redisTemplate;
 
     public RedisTemplate<String, Object> getRedisTemplate() {
@@ -28,7 +28,7 @@ public class RedisUtils {
     }
 
     /**
-     * Ö¸¶¨»º´æÊ§Ğ§Ê±¼ä
+     * æŒ‡å®šç¼“å­˜å¤±æ•ˆæ—¶é—´
      */
     public boolean expire(String key, long time) {
         try {
@@ -44,20 +44,20 @@ public class RedisUtils {
     }
 
     /**
-     * ¸ù¾İkey »ñÈ¡¹ıÆÚÊ±¼ä
+     * æ ¹æ®key è·å–è¿‡æœŸæ—¶é—´
      *
-     * @param key ¼ü ²»ÄÜÎªnull
-     * @return Ê±¼ä(Ãë) ·µ»Ø0´ú±íÎªÓÀ¾ÃÓĞĞ§
+     * @param key é”® ä¸èƒ½ä¸ºnull
+     * @return æ—¶é—´(ç§’) è¿”å›0ä»£è¡¨ä¸ºæ°¸ä¹…æœ‰æ•ˆ
      */
     public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
     /**
-     * ÅĞ¶ÏkeyÊÇ·ñ´æÔÚ
+     * åˆ¤æ–­keyæ˜¯å¦å­˜åœ¨
      *
-     * @param key ¼ü
-     * @return true ´æÔÚ false²»´æÔÚ
+     * @param key é”®
+     * @return true å­˜åœ¨ falseä¸å­˜åœ¨
      */
     public boolean hasKey(String key) {
         try {
@@ -70,9 +70,9 @@ public class RedisUtils {
     }
 
     /**
-     * É¾³ı»º´æ
+     * åˆ é™¤ç¼“å­˜
      *
-     * @param key ¿ÉÒÔ´«Ò»¸öÖµ »ò¶à¸ö
+     * @param key å¯ä»¥ä¼ ä¸€ä¸ªå€¼ æˆ–å¤šä¸ª
      */
     @SuppressWarnings("unchecked")
     public void del(String... key) {
@@ -86,21 +86,21 @@ public class RedisUtils {
     }
 
     /**
-     * ÆÕÍ¨»º´æ»ñÈ¡
+     * æ™®é€šç¼“å­˜è·å–
      *
-     * @param key ¼ü
-     * @return Öµ
+     * @param key é”®
+     * @return å€¼
      */
     public Object get(String key) {
         return key == null ? null : redisTemplate.opsForValue().get(key);
     }
 
     /**
-     * ÆÕÍ¨»º´æ·ÅÈë
+     * æ™®é€šç¼“å­˜æ”¾å…¥
      *
-     * @param key   ¼ü
-     * @param value Öµ
-     * @return true³É¹¦ falseÊ§°Ü
+     * @param key   é”®
+     * @param value å€¼
+     * @return trueæˆåŠŸ falseå¤±è´¥
      */
     public boolean set(String key, Object value) {
         try {
@@ -114,12 +114,12 @@ public class RedisUtils {
     }
 
     /**
-     * ÆÕÍ¨»º´æ·ÅÈë²¢ÉèÖÃÊ±¼ä
+     * æ™®é€šç¼“å­˜æ”¾å…¥å¹¶è®¾ç½®æ—¶é—´
      *
-     * @param key   ¼ü
-     * @param value Öµ
-     * @param time  Ê±¼ä(Ãë) timeÒª´óÓÚ0 Èç¹ûtimeĞ¡ÓÚµÈÓÚ0 ½«ÉèÖÃÎŞÏŞÆÚ
-     * @return true³É¹¦ false Ê§°Ü
+     * @param key   é”®
+     * @param value å€¼
+     * @param time  æ—¶é—´(ç§’) timeè¦å¤§äº0 å¦‚æœtimeå°äºç­‰äº0 å°†è®¾ç½®æ— é™æœŸ
+     * @return trueæˆåŠŸ false å¤±è´¥
      */
     public boolean set(String key, Object value, long time) {
         try {
@@ -137,27 +137,27 @@ public class RedisUtils {
     }
 
     /**
-     * µİÔö
+     * é€’å¢
      *
-     * @param key   ¼ü
-     * @param delta ÒªÔö¼Ó¼¸(´óÓÚ0)
+     * @param key   é”®
+     * @param delta è¦å¢åŠ å‡ (å¤§äº0)
      */
     public long incr(String key, long delta) {
         if (delta < 0) {
-            throw new RuntimeException("µİÔöÒò×Ó±ØĞë´óÓÚ0");
+            throw new RuntimeException("é€’å¢å› å­å¿…é¡»å¤§äº0");
         }
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
     /**
-     * µİ¼õ
+     * é€’å‡
      *
-     * @param key   ¼ü
-     * @param delta Òª¼õÉÙ¼¸(Ğ¡ÓÚ0)
+     * @param key   é”®
+     * @param delta è¦å‡å°‘å‡ (å°äº0)
      */
     public long decr(String key, long delta) {
         if (delta < 0) {
-            throw new RuntimeException("µİ¼õÒò×Ó±ØĞë´óÓÚ0");
+            throw new RuntimeException("é€’å‡å› å­å¿…é¡»å¤§äº0");
         }
         return redisTemplate.opsForValue().increment(key, -delta);
     }
@@ -165,19 +165,19 @@ public class RedisUtils {
     /**
      * HashGet
      *
-     * @param key  ¼ü ²»ÄÜÎªnull
-     * @param item Ïî ²»ÄÜÎªnull
-     * @return Öµ
+     * @param key  é”® ä¸èƒ½ä¸ºnull
+     * @param item é¡¹ ä¸èƒ½ä¸ºnull
+     * @return å€¼
      */
     public Object hget(String key, String item) {
         return redisTemplate.opsForHash().get(key, item);
     }
 
     /**
-     * »ñÈ¡hashKey¶ÔÓ¦µÄËùÓĞ¼üÖµ
+     * è·å–hashKeyå¯¹åº”çš„æ‰€æœ‰é”®å€¼
      *
-     * @param key ¼ü
-     * @return ¶ÔÓ¦µÄ¶à¸ö¼üÖµ
+     * @param key é”®
+     * @return å¯¹åº”çš„å¤šä¸ªé”®å€¼
      */
     public Map<Object, Object> hmget(String key) {
         return redisTemplate.opsForHash().entries(key);
@@ -186,9 +186,9 @@ public class RedisUtils {
     /**
      * HashSet
      *
-     * @param key ¼ü
-     * @param map ¶ÔÓ¦¶à¸ö¼üÖµ
-     * @return true ³É¹¦ false Ê§°Ü
+     * @param key é”®
+     * @param map å¯¹åº”å¤šä¸ªé”®å€¼
+     * @return true æˆåŠŸ false å¤±è´¥
      */
     public boolean hmset(String key, Map<String, Object> map) {
         try {
@@ -202,12 +202,12 @@ public class RedisUtils {
     }
 
     /**
-     * HashSet ²¢ÉèÖÃÊ±¼ä
+     * HashSet å¹¶è®¾ç½®æ—¶é—´
      *
-     * @param key  ¼ü
-     * @param map  ¶ÔÓ¦¶à¸ö¼üÖµ
-     * @param time Ê±¼ä(Ãë)
-     * @return true³É¹¦ falseÊ§°Ü
+     * @param key  é”®
+     * @param map  å¯¹åº”å¤šä¸ªé”®å€¼
+     * @param time æ—¶é—´(ç§’)
+     * @return trueæˆåŠŸ falseå¤±è´¥
      */
     public boolean hmset(String key, Map<String, Object> map, long time) {
         try {
@@ -224,12 +224,12 @@ public class RedisUtils {
     }
 
     /**
-     * ÏòÒ»ÕÅhash±íÖĞ·ÅÈëÊı¾İ,Èç¹û²»´æÔÚ½«´´½¨
+     * å‘ä¸€å¼ hashè¡¨ä¸­æ”¾å…¥æ•°æ®,å¦‚æœä¸å­˜åœ¨å°†åˆ›å»º
      *
-     * @param key   ¼ü
-     * @param item  Ïî
-     * @param value Öµ
-     * @return true ³É¹¦ falseÊ§°Ü
+     * @param key   é”®
+     * @param item  é¡¹
+     * @param value å€¼
+     * @return true æˆåŠŸ falseå¤±è´¥
      */
     public boolean hset(String key, String item, Object value) {
         try {
@@ -243,13 +243,13 @@ public class RedisUtils {
     }
 
     /**
-     * ÏòÒ»ÕÅhash±íÖĞ·ÅÈëÊı¾İ,Èç¹û²»´æÔÚ½«´´½¨
+     * å‘ä¸€å¼ hashè¡¨ä¸­æ”¾å…¥æ•°æ®,å¦‚æœä¸å­˜åœ¨å°†åˆ›å»º
      *
-     * @param key   ¼ü
-     * @param item  Ïî
-     * @param value Öµ
-     * @param time  Ê±¼ä(Ãë)  ×¢Òâ:Èç¹ûÒÑ´æÔÚµÄhash±íÓĞÊ±¼ä,ÕâÀï½«»áÌæ»»Ô­ÓĞµÄÊ±¼ä
-     * @return true ³É¹¦ falseÊ§°Ü
+     * @param key   é”®
+     * @param item  é¡¹
+     * @param value å€¼
+     * @param time  æ—¶é—´(ç§’)  æ³¨æ„:å¦‚æœå·²å­˜åœ¨çš„hashè¡¨æœ‰æ—¶é—´,è¿™é‡Œå°†ä¼šæ›¿æ¢åŸæœ‰çš„æ—¶é—´
+     * @return true æˆåŠŸ falseå¤±è´¥
      */
     public boolean hset(String key, String item, Object value, long time) {
         try {
@@ -266,52 +266,52 @@ public class RedisUtils {
     }
 
     /**
-     * É¾³ıhash±íÖĞµÄÖµ
+     * åˆ é™¤hashè¡¨ä¸­çš„å€¼
      *
-     * @param key  ¼ü ²»ÄÜÎªnull
-     * @param item Ïî ¿ÉÒÔÊ¹¶à¸ö ²»ÄÜÎªnull
+     * @param key  é”® ä¸èƒ½ä¸ºnull
+     * @param item é¡¹ å¯ä»¥ä½¿å¤šä¸ª ä¸èƒ½ä¸ºnull
      */
     public void hdel(String key, Object... item) {
         redisTemplate.opsForHash().delete(key, item);
     }
 
     /**
-     * ÅĞ¶Ïhash±íÖĞÊÇ·ñÓĞ¸ÃÏîµÄÖµ
+     * åˆ¤æ–­hashè¡¨ä¸­æ˜¯å¦æœ‰è¯¥é¡¹çš„å€¼
      *
-     * @param key  ¼ü ²»ÄÜÎªnull
-     * @param item Ïî ²»ÄÜÎªnull
-     * @return true ´æÔÚ false²»´æÔÚ
+     * @param key  é”® ä¸èƒ½ä¸ºnull
+     * @param item é¡¹ ä¸èƒ½ä¸ºnull
+     * @return true å­˜åœ¨ falseä¸å­˜åœ¨
      */
     public boolean hHasKey(String key, String item) {
         return redisTemplate.opsForHash().hasKey(key, item);
     }
 
     /**
-     * hashµİÔö Èç¹û²»´æÔÚ,¾Í»á´´½¨Ò»¸ö ²¢°ÑĞÂÔöºóµÄÖµ·µ»Ø
+     * hashé€’å¢ å¦‚æœä¸å­˜åœ¨,å°±ä¼šåˆ›å»ºä¸€ä¸ª å¹¶æŠŠæ–°å¢åçš„å€¼è¿”å›
      *
-     * @param key  ¼ü
-     * @param item Ïî
-     * @param by   ÒªÔö¼Ó¼¸(´óÓÚ0)
+     * @param key  é”®
+     * @param item é¡¹
+     * @param by   è¦å¢åŠ å‡ (å¤§äº0)
      */
     public double hincr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, by);
     }
 
     /**
-     * hashµİ¼õ
+     * hashé€’å‡
      *
-     * @param key  ¼ü
-     * @param item Ïî
-     * @param by   Òª¼õÉÙ¼Ç(Ğ¡ÓÚ0)
+     * @param key  é”®
+     * @param item é¡¹
+     * @param by   è¦å‡å°‘è®°(å°äº0)
      */
     public double hdecr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, -by);
     }
 
     /**
-     * ¸ù¾İkey»ñÈ¡SetÖĞµÄËùÓĞÖµ
+     * æ ¹æ®keyè·å–Setä¸­çš„æ‰€æœ‰å€¼
      *
-     * @param key ¼ü
+     * @param key é”®
      */
     public Set<Object> sGet(String key) {
         try {
@@ -324,11 +324,11 @@ public class RedisUtils {
     }
 
     /**
-     * ¸ù¾İvalue´ÓÒ»¸ösetÖĞ²éÑ¯,ÊÇ·ñ´æÔÚ
+     * æ ¹æ®valueä»ä¸€ä¸ªsetä¸­æŸ¥è¯¢,æ˜¯å¦å­˜åœ¨
      *
-     * @param key   ¼ü
-     * @param value Öµ
-     * @return true ´æÔÚ false²»´æÔÚ
+     * @param key   é”®
+     * @param value å€¼
+     * @return true å­˜åœ¨ falseä¸å­˜åœ¨
      */
     public boolean sHasKey(String key, Object value) {
         try {
@@ -341,11 +341,11 @@ public class RedisUtils {
     }
 
     /**
-     * ½«Êı¾İ·ÅÈëset»º´æ
+     * å°†æ•°æ®æ”¾å…¥setç¼“å­˜
      *
-     * @param key    ¼ü
-     * @param values Öµ ¿ÉÒÔÊÇ¶à¸ö
-     * @return ³É¹¦¸öÊı
+     * @param key    é”®
+     * @param values å€¼ å¯ä»¥æ˜¯å¤šä¸ª
+     * @return æˆåŠŸä¸ªæ•°
      */
     public long sSet(String key, Object... values) {
         try {
@@ -358,12 +358,12 @@ public class RedisUtils {
     }
 
     /**
-     * ½«setÊı¾İ·ÅÈë»º´æ
+     * å°†setæ•°æ®æ”¾å…¥ç¼“å­˜
      *
-     * @param key    ¼ü
-     * @param time   Ê±¼ä(Ãë)
-     * @param values Öµ ¿ÉÒÔÊÇ¶à¸ö
-     * @return ³É¹¦¸öÊı
+     * @param key    é”®
+     * @param time   æ—¶é—´(ç§’)
+     * @param values å€¼ å¯ä»¥æ˜¯å¤šä¸ª
+     * @return æˆåŠŸä¸ªæ•°
      */
     public long sSetAndTime(String key, long time, Object... values) {
         try {
@@ -378,9 +378,9 @@ public class RedisUtils {
     }
 
     /**
-     * »ñÈ¡set»º´æµÄ³¤¶È
+     * è·å–setç¼“å­˜çš„é•¿åº¦
      *
-     * @param key ¼ü
+     * @param key é”®
      */
     public long sGetSetSize(String key) {
         try {
@@ -393,11 +393,11 @@ public class RedisUtils {
     }
 
     /**
-     * ÒÆ³ıÖµÎªvalueµÄ
+     * ç§»é™¤å€¼ä¸ºvalueçš„
      *
-     * @param key    ¼ü
-     * @param values Öµ ¿ÉÒÔÊÇ¶à¸ö
-     * @return ÒÆ³ıµÄ¸öÊı
+     * @param key    é”®
+     * @param values å€¼ å¯ä»¥æ˜¯å¤šä¸ª
+     * @return ç§»é™¤çš„ä¸ªæ•°
      */
     public long setRemove(String key, Object... values) {
         try {
@@ -411,11 +411,11 @@ public class RedisUtils {
     }
 
     /**
-     * »ñÈ¡list»º´æµÄÄÚÈİ
+     * è·å–listç¼“å­˜çš„å†…å®¹
      *
-     * @param key   ¼ü
-     * @param start ¿ªÊ¼
-     * @param end   ½áÊø  0 µ½ -1´ú±íËùÓĞÖµ
+     * @param key   é”®
+     * @param start å¼€å§‹
+     * @param end   ç»“æŸ  0 åˆ° -1ä»£è¡¨æ‰€æœ‰å€¼
      */
     public List<Object> lGet(String key, long start, long end) {
         try {
@@ -428,9 +428,9 @@ public class RedisUtils {
     }
 
     /**
-     * »ñÈ¡list»º´æµÄ³¤¶È
+     * è·å–listç¼“å­˜çš„é•¿åº¦
      *
-     * @param key ¼ü
+     * @param key é”®
      */
     public long lGetListSize(String key) {
         try {
@@ -443,10 +443,10 @@ public class RedisUtils {
     }
 
     /**
-     * Í¨¹ıË÷Òı »ñÈ¡listÖĞµÄÖµ
+     * é€šè¿‡ç´¢å¼• è·å–listä¸­çš„å€¼
      *
-     * @param key   ¼ü
-     * @param index Ë÷Òı  index>=0Ê±£¬ 0 ±íÍ·£¬1 µÚ¶ş¸öÔªËØ£¬ÒÀ´ÎÀàÍÆ£»index<0Ê±£¬-1£¬±íÎ²£¬-2µ¹ÊıµÚ¶ş¸öÔªËØ£¬ÒÀ´ÎÀàÍÆ
+     * @param key   é”®
+     * @param index ç´¢å¼•  index>=0æ—¶ï¼Œ 0 è¡¨å¤´ï¼Œ1 ç¬¬äºŒä¸ªå…ƒç´ ï¼Œä¾æ¬¡ç±»æ¨ï¼›index<0æ—¶ï¼Œ-1ï¼Œè¡¨å°¾ï¼Œ-2å€’æ•°ç¬¬äºŒä¸ªå…ƒç´ ï¼Œä¾æ¬¡ç±»æ¨
      */
     public Object lGetIndex(String key, long index) {
         try {
@@ -459,10 +459,10 @@ public class RedisUtils {
     }
 
     /**
-     * ½«list·ÅÈë»º´æ
+     * å°†listæ”¾å…¥ç¼“å­˜
      *
-     * @param key   ¼ü
-     * @param value Öµ
+     * @param key   é”®
+     * @param value å€¼
      */
     public boolean lSet(String key, Object value) {
         try {
@@ -476,11 +476,11 @@ public class RedisUtils {
     }
 
     /**
-     * ½«list·ÅÈë»º´æ
+     * å°†listæ”¾å…¥ç¼“å­˜
      *
-     * @param key   ¼ü
-     * @param value Öµ
-     * @param time  Ê±¼ä(Ãë)
+     * @param key   é”®
+     * @param value å€¼
+     * @param time  æ—¶é—´(ç§’)
      */
     public boolean lSet(String key, Object value, long time) {
         try {
@@ -495,10 +495,10 @@ public class RedisUtils {
     }
 
     /**
-     * ½«list·ÅÈë»º´æ(ÍùÓÒ²åÈëÈ«²¿)
+     * å°†listæ”¾å…¥ç¼“å­˜(å¾€å³æ’å…¥å…¨éƒ¨)
      *
-     * @param key   ¼ü
-     * @param value Öµ
+     * @param key   é”®
+     * @param value å€¼
      */
     public boolean lSet(String key, List<Object> value) {
         try {
@@ -512,11 +512,11 @@ public class RedisUtils {
     }
 
     /**
-     * ½«list·ÅÈë»º´æ(ÍùÓÒ²åÈëÈ«²¿)
+     * å°†listæ”¾å…¥ç¼“å­˜(å¾€å³æ’å…¥å…¨éƒ¨)
      *
-     * @param key   ¼ü
-     * @param value Öµ
-     * @param time  Ê±¼ä(Ãë)
+     * @param key   é”®
+     * @param value å€¼
+     * @param time  æ—¶é—´(ç§’)
      */
     public boolean lSet(String key, List<Object> value, long time) {
         try {
@@ -531,11 +531,11 @@ public class RedisUtils {
     }
 
     /**
-     * ¸ù¾İË÷ÒıĞŞ¸ÄlistÖĞµÄÄ³ÌõÊı¾İ
+     * æ ¹æ®ç´¢å¼•ä¿®æ”¹listä¸­çš„æŸæ¡æ•°æ®
      *
-     * @param key   ¼ü
-     * @param index Ë÷Òı
-     * @param value Öµ
+     * @param key   é”®
+     * @param index ç´¢å¼•
+     * @param value å€¼
      */
     public boolean lUpdateIndex(String key, long index, Object value) {
         try {
@@ -549,12 +549,12 @@ public class RedisUtils {
     }
 
     /**
-     * ÒÆ³ıN¸öÖµÎªvalue
+     * ç§»é™¤Nä¸ªå€¼ä¸ºvalue
      *
-     * @param key   ¼ü
-     * @param count ÒÆ³ı¶àÉÙ¸ö
-     * @param value Öµ
-     * @return ÒÆ³ıµÄ¸öÊı
+     * @param key   é”®
+     * @param count ç§»é™¤å¤šå°‘ä¸ª
+     * @param value å€¼
+     * @return ç§»é™¤çš„ä¸ªæ•°
      */
     public long lRemove(String key, long count, Object value) {
         try {

@@ -9,18 +9,18 @@ import javax.jws.Oneway;
  * Created by wuminggu on 2018/5/9.
  */
 public class Examination {
-    private Long id;                    //Ö÷¼ü¡¢×ÔÔöid
-    private String testId;              //ÊÔ¾íid
-    private Integer totalScore;         //×Ü·Ö
-    private Integer totalQuestions;     //ÌâÄ¿ÊıÁ¿
-    private Integer testTime;           //¿¼ÊÔÊ±¼ä£¨·ÖÖÓ£©
-    private String questionList;        //ÌâÄ¿List(String)
-    private List<Long> questions;       //ÌâÄ¿List
-    private String scoreList;           //·ÖÖµList(String)
-    private List<Integer> scores;       //·ÖÖµList
-    private Integer status;             //ÊÔ¾í×´Ì¬:0Î´Í¨¹ı¡¢1Í¨¹ı¡¢2ÉóºËÖĞ
-    private Date created;               //´´½¨Ê±¼ä
-    private Date modified;              //¸üĞÂÊ±¼ä
+    private Long id;                    //ä¸»é”®ã€è‡ªå¢id
+    private String testId;              //è¯•å·id
+    private Integer totalScore;         //æ€»åˆ†
+    private Integer totalQuestions;     //é¢˜ç›®æ•°é‡
+    private Integer testTime;           //è€ƒè¯•æ—¶é—´ï¼ˆåˆ†é’Ÿï¼‰
+    private String questionList;        //é¢˜ç›®List(String)
+    private List<Long> questions;       //é¢˜ç›®List
+    private String scoreList;           //åˆ†å€¼List(String)
+    private List<Integer> scores;       //åˆ†å€¼List
+    private Integer status;             //è¯•å·çŠ¶æ€:0æœªé€šè¿‡ã€1é€šè¿‡ã€2å®¡æ ¸ä¸­
+    private Date created;               //åˆ›å»ºæ—¶é—´
+    private Date modified;              //æ›´æ–°æ—¶é—´
 
     public Examination() {
     }

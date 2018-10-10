@@ -1,5 +1,10 @@
 package com.sh.znks.common.base.util;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -8,12 +13,32 @@ import java.util.regex.Pattern;
 public class DataUtils {
 
     /**
-     * ÅÐ¶ÏÊÇ·ñÎªÕûÊý
-     * @param str ´«ÈëµÄ×Ö·û´®
-     * @return ÊÇÕûÊý·µ»Øtrue,·ñÔò·µ»Øfalse
+     * åˆ¤æ–­æ˜¯å¦ä¸ºæ•´æ•°
+     * @param str ä¼ å…¥çš„å­—ç¬¦ä¸²
+     * @return æ˜¯æ•´æ•°è¿”å›žtrue,å¦åˆ™è¿”å›žfalse
      */
     public static boolean isInteger(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
+    /**
+     * string --> list
+     * @param strs
+     * @return
+     */
+    public static List<Long> string2List(String strs) {
+        if (StringUtils.isNotBlank(strs)) {
+            String[] str = strs.split(",");
+            List<Long> res = new ArrayList<>();
+            for (String s : str) {
+                res.add(Long.valueOf(s));
+            }
+            return res;
+        } else {
+            return null;
+        }
+    }
+
+
 }
