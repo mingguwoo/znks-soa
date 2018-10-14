@@ -65,5 +65,5 @@ public interface AnswerDao {
      * @param userId
      * @return
      */
-    public List<String> getQuestionIdsByAnswer(String userId);
+    public List<Long> getQuestionIdsByAnswer(String userId);
 }

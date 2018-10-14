@@ -4,7 +4,7 @@ package com.sh.znks.domain.dto;
  * Created by wuminggu on 2018/7/23.
  */
 public class AnswerParam {
-    private Long questionId;          //问题id
+    private Long questionId;            //问题id
     private String answerDetail;        //提交答案描述
     private String userId;              //用户id/答题者id
     private String battleId;            //团id

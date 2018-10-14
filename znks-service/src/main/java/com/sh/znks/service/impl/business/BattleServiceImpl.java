@@ -21,6 +21,7 @@ import com.sh.znks.domain.dto.QuestionCondition;
 import com.sh.znks.domain.user.WxUser;
 import com.sh.znks.service.business.BattleService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -306,6 +307,31 @@ public class BattleServiceImpl implements BattleService {
         }
     }
 
+    @Override
+    public ResultResponse startBattle(String battleId) {
+        try {
+            List<Battle> resList = getBattleInfo(battleId, Constant.ONE, null);
+            if (resList == null) {
+                log.error("L314_startBattle is null");
+                return new ResultResponse(ResultCodeEnum.ZN_NO_DATA);
+            }
+            //参团人员详情
+            Battle battle = resList.get(0);
+            String questionIds = battle.getQuestionIds();
+            if (StringUtils.isBlank(questionIds)) {
+                log.error("L322_startBattle questionIds is null");
+                return new ResultResponse(ResultCodeEnum.ZN_DATA_ERR);
+            }
+            //问题id转为list
+            List<Long> questionIdList = DataUtils.string2List(questionIds);
+
+            return new ResultResponse(ResultCodeEnum.ZN_OK, questionIdList);
+        } catch (Exception e) {
+            log.error("L321_startBattle e:", e);
+            return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
+        }
+    }
+
     private List<Battle> getBattleInfo(String battleId, Integer status, String battleName) throws Exception {
         BattleCondition condition = new BattleCondition();
         condition.setBattleId(battleId);
@@ -319,5 +345,6 @@ public class BattleServiceImpl implements BattleService {
 
         return resList;
     }
+
 
 }

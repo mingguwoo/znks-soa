@@ -69,7 +69,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public List<String> getQuestionIdsByAnswer(String userId) {
+    public List<Long> getQuestionIdsByAnswer(String userId) {
         return znksSqlSession.selectList("Answer.getQuestionIdsByAnswer", userId);
     }
 

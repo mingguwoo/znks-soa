@@ -90,4 +90,15 @@ public class BattleController {
 
         return battleService.getBattleResultDetail(battleId);
     }
+
+    @RequestMapping(value = "/startBattle", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultResponse startBattle(String battleId) {
+        //校验必填项
+        if (StringUtils.isBlank(battleId)) {
+            return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
+        }
+
+        return battleService.startBattle(battleId);
+    }
 }

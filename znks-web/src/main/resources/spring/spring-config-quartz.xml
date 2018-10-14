@@ -41,8 +41,8 @@
     <bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no">
         <property name="triggers">
             <list>
-                <!--<ref bean="znksStatusTrigger"/>-->
-                <!--<ref bean="znksAccountingTrigger"/>-->
+                <ref bean="znksStatusTrigger"/>
+                <ref bean="znksAccountingTrigger"/>
                 <ref bean="znksExpiryTrigger"/>
             </list>
         </property>

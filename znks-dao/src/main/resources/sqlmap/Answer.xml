@@ -134,7 +134,7 @@
         limit #{start},#{size}
     </select>
 
-    <select id="getQuestionIdsByAnswer" parameterType="java.lang.String" resultType="java.lang.String">
+    <select id="getQuestionIdsByAnswer" parameterType="java.lang.String" resultType="java.lang.Long">
         SELECT DISTINCT question_id FROM zn_answer
         WHERE status = 2
         AND user_id = #{userId}

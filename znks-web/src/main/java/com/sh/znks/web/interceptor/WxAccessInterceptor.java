@@ -29,8 +29,8 @@ public class WxAccessInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //预处理
-//        boolean res = false;
-        boolean res = true;
+        boolean res = false;
+//        boolean res = true;
         String url = request.getRequestURL().toString();
         log.error("url is {}", url);
         String path = request.getServletPath();

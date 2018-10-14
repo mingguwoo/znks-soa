@@ -128,7 +128,7 @@
         SET status = #{statusAft}, modified = now()
         WHERE status = #{statusBef}
         AND battle_id IN (
-        <foreach collection = "battleIds" item="item"  open = "(" close = ")" separator = ",">
+        <foreach collection = "battleIds" item="item" separator = ",">
             #{item}
         </foreach>
         )
@@ -158,7 +158,7 @@
         AND battle_id = #{battleId}
     </update>
 
-    <select id="getBattleRecordListByBattleId" parameterType="java.lang.String" resultType="java.lang.String">
+    <select id="getBattleRecordListByBattleId" parameterType="java.lang.String" resultMap="BattleRecord">
         SELECT id,<include refid="btsFields"/>,modified FROM zn_battle_record
         WHERE battle_id = #{battleId}
         ORDER BY battle_score DESC

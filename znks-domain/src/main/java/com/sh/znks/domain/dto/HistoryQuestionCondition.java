@@ -12,7 +12,7 @@ public class HistoryQuestionCondition {
     private Integer difficultyLevel;    //难度系数（1-5颗星）
     private Integer questionValue;      //问题价值（0-5滴血）
     private Integer questionArea;       //出题领域（小学、初中、高中、大学、英语等级、驾考、社会知识、益智类。。。）
-    private List<String> questionIds;   //问题idList
+    private List<Long> questionIds;   //问题idList
     private Integer start = 0;          //查询开始条数（默认:0开始）
     private Integer size = 10;          //查询限制条数（默认:10条）
 
@@ -64,11 +64,11 @@ public class HistoryQuestionCondition {
         this.questionArea = questionArea;
     }
 
-    public List<String> getQuestionIds() {
+    public List<Long> getQuestionIds() {
         return questionIds;
     }
 
-    public void setQuestionIds(List<String> questionIds) {
+    public void setQuestionIds(List<Long> questionIds) {
         this.questionIds = questionIds;
     }
 

@@ -142,9 +142,9 @@
             <if test="questionArea != null">
                 AND question_area = #{questionArea}
             </if>
-            <if test="questionIds !=null and questionIds.length() &gt; 0">
+            <if test="questionIds !=null and questionIds.size() &gt; 0">
                 question_id IN (
-                <foreach collection = "questionIds" item="item"  open = "(" close = ")" separator = ",">
+                <foreach collection = "questionIds" item="item" separator = ",">
                     #{item}
                 </foreach>
                 )

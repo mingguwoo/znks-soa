@@ -134,7 +134,7 @@ public class HomeServiceImpl implements HomeService {
     public ResultResponse getHistoryQuestionInfo(HistoryQuestionCondition historyQuestionCondition) {
         try {
             WxUser wu = AuthorHolder.getWxAuthor();
-            List<String> questionIds = answerDao.getQuestionIdsByAnswer(wu.getUnionId());
+            List<Long> questionIds = answerDao.getQuestionIdsByAnswer(wu.getUnionId());
             if (CollectionUtils.isEmpty(questionIds)) {
                 log.error("L133_getHistoryQuestionInfo questionIds is{}", JsonUtils.toJson(questionIds));
                 return new ResultResponse(ResultCodeEnum.ZN_NO_DATA);
@@ -181,7 +181,7 @@ public class HomeServiceImpl implements HomeService {
             memorandum.setUserId(user.getUnionId());
             //查询是否存在收藏题
             Memorandum memorandumInfo = questionDao.getMemorandumInfo(questionId, user.getUnionId());
-            if (memorandum == null) {
+            if (memorandumInfo == null) {
                 memorandum.setStatus(Constant.ONE);
                 questionDao.insertMemorandum(memorandum);
             } else {

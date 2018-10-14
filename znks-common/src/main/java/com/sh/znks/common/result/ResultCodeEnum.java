@@ -21,7 +21,8 @@ public enum  ResultCodeEnum {
     ZN_TOKEN_ERR(13, "token is error"),
     ZN_BATTLE_IS_EXIST(14, "this battleGroup has exist"),
     ZN_OUT_OF_BOUND(15, "the amount is out of bound"),
-    ZN_USER_JOINED(16, "the user has joined");
+    ZN_USER_JOINED(16, "the user has joined"),
+    ZN_DATA_ERR(17, "the data is error");
 
     private int code;
     private String msg;

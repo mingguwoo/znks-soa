@@ -69,12 +69,12 @@ public class UserServiceImpl implements UserService {
 //            Integer errcode = (Integer) resMap.get("errcode");
 //            String errmsg = (String) resMap.get("errmsg");
 
-//            String openid = (String) resMap.get("openid");
-//            String sessionKey = (String) resMap.get("session_key");
+            String openid = (String) resMap.get("openid");
+            String sessionKey = (String) resMap.get("session_key");
             String unionId = (String) resMap.get("unionid");
             //测试数据
-            String openid = "1234567890";
-            String sessionKey = "key1234567890";
+//            String openid = "1234567890";
+//            String sessionKey = "key1234567890";
             if (StringUtils.isBlank(openid) || StringUtils.isBlank(sessionKey)) {
                 log.error("L461_getxAuthorizationGenLoginInfo res is {}", JsonUtils.toJson(resMap));
                 return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);

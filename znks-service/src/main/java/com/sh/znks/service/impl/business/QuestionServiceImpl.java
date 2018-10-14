@@ -218,14 +218,14 @@ public class QuestionServiceImpl implements QuestionService {
             }
             //插入答案结果
             int res = answerDao.insertAnswers(answers);
-            if (res <= Constant.ZERO){
+            if (res <= Constant.ZERO) {
                 return new ResultResponse(ResultCodeEnum.ZN_SYS_ERR);
             }
 
             //团战结果提交时需对团战记录做更新
             if (isBattle) {
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
-                String rate = df.format((float)score/params.size());//返回的是String类型
+                String rate = df.format((float) 100 * score / params.size());//返回的是String类型
                 //更新记录表团战得分字段
                 BattleRecord br = new BattleRecord();
                 br.setUserId(userId);

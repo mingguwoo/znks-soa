@@ -48,4 +48,11 @@ public interface BattleService {
      * @return
      */
     public ResultResponse getBattleResultDetail(String battleId);
+
+    /**
+     * 开始团战
+     * @param battleId
+     * @return 题目list
+     */
+    public ResultResponse startBattle(String battleId);
 }

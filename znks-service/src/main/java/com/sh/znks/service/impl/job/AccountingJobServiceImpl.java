@@ -61,17 +61,19 @@ public class AccountingJobServiceImpl implements JobService {
 
             //对前3名做分级赠送礼物，其他的只有排名。
             List<BattleRecord> resultList = new ArrayList<>();
-            for (int i = 0; i <= battleIds.size(); i++) {
+            for (int i = 0; i < battleIds.size(); i++) {
                 String bId = battleIds.get(i);
                 List<BattleRecord> brlist = battleRecordMap.get(bId);
-                for (int j = 0; j <= brlist.size(); j++) {
-                    int ranking = 1;
+                int ranking = 1;
+                for (int j = 0; j < brlist.size(); j++) {
                     BattleRecord br = brlist.get(j);
-                    BattleRecord brNext = brlist.get(j + 1);
                     br.setRanking(ranking);
-                    //先取出每个battleId对应的参战人数，按分数排序取出前三名(分数一样的并列)
-                    if (Integer.valueOf(brNext.getBattleScore()) < Integer.valueOf(br.getBattleScore())) {
-                        ranking++;
+                    if (j + 1 < brlist.size()) {
+                        BattleRecord brNext = brlist.get(j + 1);
+                        //先取出每个battleId对应的参战人数，按分数排序取出前三名(分数一样的并列)
+                        if (Integer.valueOf(brNext.getBattleScore()) < Integer.valueOf(br.getBattleScore())) {
+                            ranking++;
+                        }
                     }
                     //设置礼物
                     switch (ranking) {

@@ -40,6 +40,6 @@ public class HomeController {
     @ResponseBody
     public ResultResponse collectionQuestion(Long questionId, Integer status) {
         //校验必填项(无)
-        return homeService.collectionQuestion(questionId,status);
+        return homeService.collectionQuestion(questionId, status);
     }
 }
