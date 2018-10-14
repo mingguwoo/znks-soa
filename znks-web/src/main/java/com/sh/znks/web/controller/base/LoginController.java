@@ -26,7 +26,7 @@ public class LoginController {
     @RequestMapping(value = "/general/wxAuthorizationGenLogin", method = RequestMethod.POST)
     @ResponseBody
     public ResultResponse wxAuthorizationGenLogin(String authorizationCode) {
-        //Ð£Ñé±ØÌîÏî
+        //æ ¡éªŒå¿…å¡«é¡¹
         if (StringUtils.isBlank(authorizationCode)) {
             return new ResultResponse(ResultCodeEnum.ZN_PARAM_ERR);
         }

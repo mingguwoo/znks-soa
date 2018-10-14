@@ -30,15 +30,15 @@ public class RegisterController {
     @RequestMapping(value = "/wxAuthorizationGenRegiste", method = RequestMethod.GET)
     @ResponseBody
     public ResultResponse wxAuthorizationGenRegiste(HttpServletRequest request, HttpServletResponse response) {
-        //±à¼­×¨¼Ò×¢²áĞÅÏ¢
+        //ç¼–è¾‘ä¸“å®¶æ³¨å†Œä¿¡æ¯
         WxUser user = RegisterUtils.InputWxParamSet(request);
 
-        //Ğ£Ñé±ØÌîÏî
+        //æ ¡éªŒå¿…å¡«é¡¹
         if (StringUtils.isBlank(user.getUnionId())) {
             return new ResultResponse(ResultCodeEnum.ZN_UNIONID_IS_NULL);
         }
 
-        //×¢²á
+        //æ³¨å†Œ
         return userService.registerWxUser(user);
     }
 }
